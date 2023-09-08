@@ -4,35 +4,41 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Contact from "./Contact";
+import usePrevPath from "@/store/usePrevPath";
 
-const MiddleEarth = () => {
+const ContactSea = () => {
   const [isTame, setIsTime] = useState(false);
   useEffect(() => {
     setTimeout(() => {
       setIsTime(true);
-      console.log("time");
     }, 0);
   });
+  const { setPath } = usePrevPath();
+  const onClickLink = () => {
+    setPath("contact-sea");
+  };
   return (
     <section
       id="contact"
       className={cn(
-        "flex min-h-screen flex-col items-center justify-between p-24",
-        "transition duration-1000 translate-y-96 opacity-0",
+        "flex min-h-screen flex-col items-center justify-between py-12 my-0",
+        "transition duration-1000 translate-y-full opacity-0",
         isTame && "opacity-100 translate-y-0",
       )}
     >
-      <div className="flex flex-col items-center">
-        <h1>GO TO</h1>
-        <div className="flex justify-between w-96">
+      <div className="flex flex-col items-center w-screen">
+        <div className="flex w-full items-center justify-center">
+          <Link href="/middle-earth" onClick={onClickLink}>
+            <div className="animate-pulse">Middle Earth</div>
+          </Link>
+        </div>
+        <div className="flex justify-around w-full">
           <Link href="/project-mountains">
             <div className="animate-pulse">Project Mountains</div>
           </Link>
-          <Link href="/middle-earth">
-            <div className="animate-pulse">Middle Earth</div>
-          </Link>
-          <Link href="/self-swamps">
-            <div className="animate-pulse">Self Swamps</div>
+
+          <Link href="/thoughts-forest">
+            <div className="animate-pulse">Thoughts Forest</div>
           </Link>
         </div>
       </div>
@@ -45,4 +51,4 @@ const MiddleEarth = () => {
   );
 };
 
-export default MiddleEarth;
+export default ContactSea;

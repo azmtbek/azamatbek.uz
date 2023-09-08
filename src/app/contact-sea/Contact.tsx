@@ -4,9 +4,9 @@ import React from "react";
 
 function Contact() {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center w-screen">
       <h1 className="text-4xl">Find me in</h1>
-      <div className="flex justify-around pt-24 w-96">
+      <div className="flex justify-around pt-12 w-full md:w-96">
         <a href="https://github.com/azmtbek" target="_blank">
           <div>
             <Github size={50} />
