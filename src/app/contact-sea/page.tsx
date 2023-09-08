@@ -5,9 +5,14 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Contact from "./Contact";
 import usePrevPath from "@/store/usePrevPath";
+import useHaveBeen from "@/store/useHaveBeen";
 
 const ContactSea = () => {
   const [isTame, setIsTime] = useState(false);
+  const { addPath } = useHaveBeen();
+  useEffect(() => {
+    addPath("/contact-sea");
+  }, [addPath]);
   useEffect(() => {
     setTimeout(() => {
       setIsTime(true);

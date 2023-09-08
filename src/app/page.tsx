@@ -5,6 +5,16 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import usePrevPath from "@/store/usePrevPath";
+import useHaveBeen, { isInPath } from "@/store/useHaveBeen";
+import useElementsOnScreen from "@/hooks/useElementsOnScreen";
+import { TimerReset } from "lucide-react";
+
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function Home() {
   const [isTame, setIsTime] = useState(false);
@@ -14,10 +24,26 @@ export default function Home() {
     }, 0);
   });
 
+  const { paths, resetPaths, addPath } = useHaveBeen();
   const { setPath } = usePrevPath();
   const onClickLink = () => {
     setPath("");
   };
+  const onResetProgress = () => {
+    resetPaths();
+  };
+
+  const [theRef, isVisible] = useElementsOnScreen({
+    root: null,
+    rootMargin: "0px",
+    threshold: 1.0,
+  }) as [theRef: React.RefObject<HTMLDivElement>, isVisible: boolean];
+
+  useEffect(() => {
+    if (!isInPath(paths, "/fake-contact") && isVisible) {
+      addPath("/fake-contact");
+    }
+  }, [isVisible, addPath, paths]);
   return (
     <>
       <main
@@ -31,9 +57,27 @@ export default function Home() {
         <h1 className="text-3xl md:text-6xl font-medium w-32 md:w-96 ">
           Welcome to <span className="text-[#009947]">Aza</span>land.
         </h1>
+        {paths.length > 1 && (
+          <button onClick={onResetProgress} className="fixed top-20 right-10">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <TimerReset />
+                </TooltipTrigger>
+                <TooltipContent side="left">
+                  <p>reset progress</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </button>
+        )}
 
         <Link href={"middle-earth"} onClick={onClickLink}>
-          <div className="animate-pulse">scroll down</div>
+          <div className="animate-pulse">
+            {isInPath(paths, "/fake-contact")
+              ? "Go to Middle Earth"
+              : "scroll down"}
+          </div>
         </Link>
       </main>
 
@@ -45,6 +89,7 @@ export default function Home() {
           <div className="">scroll up</div>
         </a>
         <Contact />
+        <div ref={theRef}></div>
       </section>
     </>
   );

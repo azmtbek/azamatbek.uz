@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import useHaveBeen from "@/store/useHaveBeen";
 import usePrevPath from "@/store/usePrevPath";
 import { MountainSnow, Sprout, Trees, Waves } from "lucide-react";
 import Link from "next/link";
@@ -10,10 +11,14 @@ const MiddleEarth = () => {
   const [isTame, setIsTime] = useState(false);
   const { path } = usePrevPath();
 
+  const { addPath } = useHaveBeen();
+  useEffect(() => {
+    addPath("/middle-earth");
+  }, [addPath]);
+
   useEffect(() => {
     setTimeout(() => {
       setIsTime(true);
-      console.log(path);
     }, 0);
   });
 

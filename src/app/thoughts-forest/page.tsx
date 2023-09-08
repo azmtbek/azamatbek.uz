@@ -1,9 +1,15 @@
 "use client";
 import { cn } from "@/lib/utils";
+import useHaveBeen from "@/store/useHaveBeen";
 import React, { useEffect, useState } from "react";
 
 function Self() {
   const [isTame, setIsTime] = useState(false);
+
+  const { addPath } = useHaveBeen();
+  useEffect(() => {
+    addPath("/thoughts-forest");
+  }, [addPath]);
 
   useEffect(() => {
     setTimeout(() => {

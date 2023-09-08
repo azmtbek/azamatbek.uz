@@ -13,13 +13,24 @@ import React from "react";
 
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import useHaveBeen, { isInPath } from "@/store/useHaveBeen";
 
 const wait = () => new Promise((resolve) => setTimeout(resolve, 1000));
 
 const MapMenu = () => {
   const [open, setOpen] = React.useState(false);
   const pathname = usePathname();
-  console.log(pathname);
+  const { paths } = useHaveBeen();
+  const onClickLink = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    link: string,
+  ) => {
+    if (isInPath(paths, link)) {
+      setOpen(false);
+    } else {
+      e.preventDefault();
+    }
+  };
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger
@@ -38,27 +49,82 @@ const MapMenu = () => {
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col items-center justify-between gap-2">
-          <Link href="/">
-            <div className="md:w-32 md:h-32" onClick={() => setOpen(false)}>
+          <Link href="/" onClick={() => setOpen(false)}>
+            <div
+              className={cn(
+                "md:w-32 md:h-32 flex items-center justify-center opacity-100",
+                // isInPath(paths, "/") && "opacity-100",
+              )}
+            >
               Into the Beginning
             </div>
           </Link>
           <div className="flex items-center justify-between gap-2">
-            <Link href="/project-mountains" onClick={() => setOpen(false)}>
-              <div className="md:w-32 md:h-32">Projecty Mountains</div>
+            <Link
+              href="/project-mountains"
+              onClick={(e) => onClickLink(e, "/project-mountains")}
+            >
+              <div
+                className={cn(
+                  "md:w-32 md:h-32 flex items-center justify-center opacity-0 cursor-default",
+                  isInPath(paths, "/project-mountains") &&
+                    "opacity-100 cursor-pointer",
+                )}
+              >
+                Projecty Mountains
+              </div>
             </Link>
-            <Link href="/middle-earth" onClick={() => setOpen(false)}>
-              <div className="md:w-32 md:h-32">Middle Earth</div>
+            <Link
+              href="/middle-earth"
+              onClick={(e) => onClickLink(e, "/middle-earth")}
+            >
+              <div
+                className={cn(
+                  "md:w-32 md:h-32 flex items-center justify-center opacity-0 cursor-default",
+                  isInPath(paths, "/middle-earth") &&
+                    "opacity-100 cursor-pointer",
+                )}
+              >
+                Middle Earth
+              </div>
             </Link>
-            <Link href="/thoughts-forest" onClick={() => setOpen(false)}>
-              <div className="md:w-32 md:h-32">Thoughts Forest</div>
+            <Link
+              href="/thoughts-forest"
+              onClick={(e) => onClickLink(e, "/thoughts-forest")}
+            >
+              <div
+                className={cn(
+                  "md:w-32 md:h-32 flex items-center justify-center opacity-0 cursor-default",
+                  isInPath(paths, "/thoughts-forest") &&
+                    "opacity-100 cursor-pointer",
+                )}
+              >
+                Thoughts Forest
+              </div>
             </Link>
           </div>
-          <Link href="/contact-sea" onClick={() => setOpen(false)}>
-            <div className="md:w-32 md:h-32">The Contact Sea</div>
+          <Link
+            href="/contact-sea"
+            className="border"
+            onClick={(e) => onClickLink(e, "/contact-sea")}
+          >
+            <div
+              className={cn(
+                "md:w-32 md:h-32 flex items-center justify-center opacity-0 cursor-default",
+                isInPath(paths, "/contact-sea") && "opacity-100 cursor-pointer",
+              )}
+            >
+              The Contact Sea
+            </div>
           </Link>
         </div>
-        <div className="w-full flex justify-end ">
+        <div className="w-full flex justify-between ">
+          <Link
+            href="/here"
+            className="w-10 h-10"
+            onClick={() => setOpen(false)}
+          >
+          </Link>
           <Link href="/why" onClick={() => setOpen(false)}>
             <Compass />
           </Link>
