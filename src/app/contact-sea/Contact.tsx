@@ -1,5 +1,5 @@
+import Leetcode from "@/icon/leetcode";
 import { Github, Linkedin } from "lucide-react";
-import Image from "next/image";
 import React from "react";
 
 function Contact() {
@@ -21,12 +21,13 @@ function Contact() {
         </a>
         <a href="https://leetcode.com/azamatbek/" target="_blank">
           <div>
-            <Image
+            <Leetcode className="dark:fill-white w-[50px] h-[50px]"/>
+            {/* <Image
               src={"/leetcode.svg"}
               width={50}
               height={50}
               alt="leetcode icon"
-            />
+            /> */}
             Leetcode
           </div>
         </a>

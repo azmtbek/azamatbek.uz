@@ -3,6 +3,8 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import MapMenu from "./Map";
+import { ThemeProvider } from "@/components/themes-provider";
+import { ThemeButton } from "./ThemeButton";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,8 +21,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(inter.className, "relative m-0 p-0")}>
-        <MapMenu />
-        {children}
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <ThemeButton/>
+          <MapMenu />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
