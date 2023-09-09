@@ -1,11 +1,13 @@
 "use client";
 import { cn } from "@/lib/utils";
 import useHaveBeen from "@/store/useHaveBeen";
+import { useTheme } from "next-themes";
 import React, { useEffect, useState } from "react";
 
 const Projects = () => {
   const [isTame, setIsTime] = useState(false);
   const { addPath } = useHaveBeen();
+  const { theme } = useTheme();
   useEffect(() => {
     addPath("/project-mountains");
   }, [addPath]);
@@ -22,6 +24,7 @@ const Projects = () => {
         isTame && "opacity-100 translate-x-0",
       )}
     >
+      {theme == "dark" && <div className="moon top-20 right-10 -z-10"></div>}
       <h1>Here shall be Projects</h1>
     </div>
   );

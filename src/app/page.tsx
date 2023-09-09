@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+
 import Contact from "./contact-sea/Contact";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -15,6 +15,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Progress } from "@/components/ui/progress";
+
+const list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 
 export default function Home() {
   const [isTame, setIsTime] = useState(false);
@@ -54,6 +57,14 @@ export default function Home() {
           isTame && "opacity-100 translate-y-0",
         )}
       >
+        <div className="absolute top-0 overflow-hidden w-full min-h-screen -z-10">
+          <div className="  w-full min-h-screen  origin-center rotate-45 hidden dark:block">
+            {list.map((index) => (
+              <div key={index} className="shooting_star">
+              </div>
+            ))}
+          </div>
+        </div>
         <h1 className="text-3xl md:text-6xl font-medium w-32 md:w-96 ">
           Welcome to <span className="text-[#009947]">Aza</span>land.
         </h1>
@@ -71,7 +82,11 @@ export default function Home() {
             </TooltipProvider>
           </div>
         )}
-        <p>Progress: {progress}%</p>
+
+        <div className="w-64 px-6">
+          <p>Progress: {progress}%</p>
+          <Progress value={progress} className="" />
+        </div>
         <Link href={"middle-earth"} onClick={onClickLink}>
           <div className="animate-pulse">
             {isInPath(paths, "/fake-contact")
