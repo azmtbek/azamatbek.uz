@@ -18,7 +18,7 @@ export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
-}) {
+  }) {
   return (
     <html lang="en">
       <body className={cn(inter.className, "relative m-0 p-0")}>

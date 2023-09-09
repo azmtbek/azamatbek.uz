@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import useHaveBeen from "@/store/useHaveBeen";
 import usePrevPath from "@/store/usePrevPath";
-import { MountainSnow, Sprout, Trees, Waves } from "lucide-react";
+import { MountainSnow, Sparkles, Sprout, Trees, Waves } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
@@ -33,7 +33,9 @@ const MiddleEarth = () => {
       )}
     >
       <Link href="/">
-        <div className="animate-pulse">go to The Beginning</div>
+        <div className="animate-pulse">
+          <Sparkles /> The Beginning
+        </div>
       </Link>
       <h1>
         <Sprout /> Middle Earth

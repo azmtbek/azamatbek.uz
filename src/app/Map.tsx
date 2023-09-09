@@ -7,9 +7,18 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Compass, Map } from "lucide-react";
+import {
+  Compass,
+  Map,
+  MountainSnow,
+  Sparkles,
+  Sprout,
+  Trees,
+  Waves,
+} from "lucide-react";
+
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -31,6 +40,11 @@ const MapMenu = () => {
       e.preventDefault();
     }
   };
+
+  useEffect(() => {
+    console.log(paths);
+  }, [paths]);
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger
@@ -56,6 +70,7 @@ const MapMenu = () => {
                 // isInPath(paths, "/") && "opacity-100",
               )}
             >
+              <Sparkles />
               Into the Beginning
             </div>
           </Link>
@@ -71,6 +86,7 @@ const MapMenu = () => {
                     "opacity-100 cursor-pointer",
                 )}
               >
+                <MountainSnow />
                 Projecty Mountains
               </div>
             </Link>
@@ -85,6 +101,7 @@ const MapMenu = () => {
                     "opacity-100 cursor-pointer",
                 )}
               >
+                <Sprout />
                 Middle Earth
               </div>
             </Link>
@@ -99,13 +116,13 @@ const MapMenu = () => {
                     "opacity-100 cursor-pointer",
                 )}
               >
+                <Trees />
                 Thoughts Forest
               </div>
             </Link>
           </div>
           <Link
             href="/contact-sea"
-            className="border"
             onClick={(e) => onClickLink(e, "/contact-sea")}
           >
             <div
@@ -114,6 +131,7 @@ const MapMenu = () => {
                 isInPath(paths, "/contact-sea") && "opacity-100 cursor-pointer",
               )}
             >
+              <Waves />
               The Contact Sea
             </div>
           </Link>

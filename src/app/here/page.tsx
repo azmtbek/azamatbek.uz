@@ -1,7 +1,13 @@
+"use client";
+import useHaveBeen from "@/store/useHaveBeen";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 
 const Admin = () => {
+  const { addPath } = useHaveBeen();
+  useEffect(() => {
+    addPath("/here");
+  }, [addPath]);
   
   return (
     <div>

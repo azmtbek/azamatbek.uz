@@ -24,7 +24,7 @@ export default function Home() {
     }, 0);
   });
 
-  const { paths, resetPaths, addPath } = useHaveBeen();
+  const { paths, resetPaths, addPath, progress } = useHaveBeen();
   const { setPath } = usePrevPath();
   const onClickLink = () => {
     setPath("");
@@ -58,7 +58,7 @@ export default function Home() {
           Welcome to <span className="text-[#009947]">Aza</span>land.
         </h1>
         {paths.length > 1 && (
-          <button onClick={onResetProgress} className="fixed top-20 right-10">
+          <div onClick={onResetProgress} className="fixed top-20 right-10">
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
@@ -69,9 +69,9 @@ export default function Home() {
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
-          </button>
+          </div>
         )}
-
+        <p>Progress: {progress}%</p>
         <Link href={"middle-earth"} onClick={onClickLink}>
           <div className="animate-pulse">
             {isInPath(paths, "/fake-contact")
