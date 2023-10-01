@@ -71,7 +71,7 @@ const MapMenu = () => {
               )}
             >
               <Sparkles />
-              Into the Beginning
+              Into the Beginning!
             </div>
           </Link>
           <div className="flex items-center justify-between gap-2">
