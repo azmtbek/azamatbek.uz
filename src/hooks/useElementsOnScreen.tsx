@@ -27,7 +27,6 @@ const useElementsOnScreen = (options: IntersectionObserverInit | undefined) => {
   }, [containerRef, options, isVisible]);
 
   return [containerRef, isVisible];
-  // return <div className="" ref={containerRef}>scroll up</div>
 };
 
 export default useElementsOnScreen;

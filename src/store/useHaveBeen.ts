@@ -35,11 +35,5 @@ const useHaveBeen = create<Store>((set) => ({
 }))
 
 export const isInPath = (paths: string[], path: string) => paths.some((curr) => path === curr)
-// export const haveProgressed = (paths: string[]) => {
-
-//   if (paths.length === 7) return 100
-//   else ()
-//   paths.some(curr => extraURL === curr)
-// }
 
 export default useHaveBeen

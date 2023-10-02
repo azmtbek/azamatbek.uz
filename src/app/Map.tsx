@@ -67,7 +67,6 @@ const MapMenu = () => {
             <div
               className={cn(
                 "md:w-32 md:h-32 flex items-center justify-center opacity-100",
-                // isInPath(paths, "/") && "opacity-100",
               )}
             >
               <Sparkles />
