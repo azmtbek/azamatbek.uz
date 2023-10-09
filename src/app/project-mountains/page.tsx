@@ -1,4 +1,12 @@
 "use client";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import useHaveBeen from "@/store/useHaveBeen";
 import { useTheme } from "next-themes";
@@ -19,7 +27,7 @@ const Projects = () => {
   return (
     <div
       className={cn(
-        "flex min-h-screen flex-col items-center justify-between py-12 my-0",
+        "flex min-h-screen flex-col items-center justify-start py-12 my-0",
         "transition duration-1000 -translate-x-full opacity-0",
         isTame && "opacity-100 translate-x-0",
       )}
@@ -32,7 +40,22 @@ const Projects = () => {
           <div className="moon4 top-24 right-20 -z-10"></div>
         </>
       )}
-      <h1>Here shall be Projects</h1>
+      <h1 className="text-2xl">Here shall be Projects</h1>
+      <div>options</div>
+      <div className="flex flex-wrap items-start w-full h-full my-10 px-24 ">
+        <Card>
+          <CardHeader>
+            <CardTitle>Card Title</CardTitle>
+            <CardDescription>Card Description</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p>Card Content</p>
+          </CardContent>
+          <CardFooter>
+            <p>Card Footer</p>
+          </CardFooter>
+        </Card>
+      </div>
     </div>
   );
 };
