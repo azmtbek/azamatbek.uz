@@ -14,8 +14,9 @@ import React, { useEffect, useState } from "react";
 
 const Projects = () => {
   const [isTame, setIsTime] = useState(false);
+  const [theme, setTheme] = useState<string | undefined>("");
   const { addPath } = useHaveBeen();
-  const { theme } = useTheme();
+  const { theme: myTheme } = useTheme();
   useEffect(() => {
     addPath("/project-mountains");
   }, [addPath]);
@@ -24,6 +25,10 @@ const Projects = () => {
       setIsTime(true);
     }, 0);
   });
+  useEffect(() => {
+    setTheme(myTheme);
+  }, [myTheme]);
+
   return (
     <div
       className={cn(
