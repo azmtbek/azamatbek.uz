@@ -1,19 +1,16 @@
 "use client";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import useHaveBeen from "@/store/useHaveBeen";
 import { useTheme } from "next-themes";
 import React, { useEffect, useState } from "react";
+import Moon from "./Moon";
+import { Grid2x2, List } from "lucide-react";
+import Grid from "./Grid";
+import { default as ListGroup } from "./List";
 
 const Projects = () => {
   const [isTame, setIsTime] = useState(false);
+  const [view, setView] = useState("grid");
   const [theme, setTheme] = useState<string | undefined>("");
   const { addPath } = useHaveBeen();
   const { theme: myTheme } = useTheme();
@@ -29,6 +26,10 @@ const Projects = () => {
     setTheme(myTheme);
   }, [myTheme]);
 
+  const onChangeView = (view: string) => {
+    setView(view);
+  };
+
   return (
     <div
       className={cn(
@@ -37,29 +38,31 @@ const Projects = () => {
         isTame && "opacity-100 translate-x-0",
       )}
     >
-      {theme == "dark" && (
-        <>
-          <div className="moon top-20 right-10 -z-20"></div>
-          <div className="moon2 top-24 right-16 -z-10"></div>
-          <div className="moon3 top-32 right-16 -z-10"></div>
-          <div className="moon4 top-24 right-20 -z-10"></div>
-        </>
-      )}
+      {theme == "dark" && <Moon />}
       <h1 className="text-2xl">Here shall be Projects</h1>
-      <div>options</div>
-      <div className="flex flex-wrap items-start w-full h-full my-10 px-24 ">
-        <Card>
-          <CardHeader>
-            <CardTitle>Card Title</CardTitle>
-            <CardDescription>Card Description</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p>Card Content</p>
-          </CardContent>
-          <CardFooter>
-            <p>Card Footer</p>
-          </CardFooter>
-        </Card>
+      <div className="flex w-full mt-24">
+        <div className="flex py-2 border rounded-xl px-3 gap-3 justify-end  w-full mx-24">
+          <button
+            onClick={() => onChangeView("grid")}
+            className={view !== "grid"
+              ? "dark:text-slate-600 text-slate-400"
+              : ""}
+          >
+            <Grid2x2 />
+          </button>
+          <button
+            onClick={() => onChangeView("list")}
+            className={view !== "list"
+              ? "dark:text-slate-600 text-slate-400"
+              : ""}
+          >
+            <List />
+          </button>
+        </div>
+      </div>
+      <div className="flex w-full h-full my-10  px-24">
+        {(view === "grid") && <Grid />}
+        {(view === "list") && <ListGroup />}
       </div>
     </div>
   );
