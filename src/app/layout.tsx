@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/components/themes-provider";
 import { ThemeButton } from "./ThemeButton";
 import { Toaster } from "@/components/ui/toaster";
 import Mode from "./Mode";
+import Navbar from "./Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,6 +28,7 @@ export default function RootLayout({
           <ThemeButton />
           <MapMenu />
           <Mode />
+          <Navbar />
           {children}
           <Toaster />
         </ThemeProvider>

@@ -107,8 +107,8 @@ const Stars = () => {
     list.push(i);
   }
   return (
-    <div className="absolute top-0 overflow-hidden w-full min-h-screen -z-10">
-      <div className="  w-full min-h-screen  origin-center rotate-45 hidden dark:block">
+    <div className="absolute top-0 overflow-hidden w-screen min-h-screen -z-20">
+      <div className="  w-screen min-h-screen  origin-center overflow-hidde rotate-45 hidden dark:block">
         {list.map((index) => (
           <div key={index} className="shooting_star">
           </div>
