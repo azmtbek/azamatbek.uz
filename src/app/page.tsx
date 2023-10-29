@@ -17,8 +17,6 @@ import {
 } from "@/components/ui/tooltip";
 import { Progress } from "@/components/ui/progress";
 
-const list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-
 export default function Home() {
   const [isTame, setIsTime] = useState(false);
   useEffect(() => {
@@ -57,14 +55,7 @@ export default function Home() {
           isTame && "opacity-100 translate-y-0",
         )}
       >
-        <div className="absolute top-0 overflow-hidden w-full min-h-screen -z-10">
-          <div className="  w-full min-h-screen  origin-center rotate-45 hidden dark:block">
-            {list.map((index) => (
-              <div key={index} className="shooting_star">
-              </div>
-            ))}
-          </div>
-        </div>
+        <Stars />
         <h1 className="text-3xl md:text-6xl font-medium w-32 md:w-96 ">
           Welcome to <span className="text-[#009947]">Aza</span>land.
         </h1>
@@ -109,3 +100,20 @@ export default function Home() {
     </>
   );
 }
+
+const Stars = () => {
+  let list = [];
+  for (let i = 1; i < 13; i++) {
+    list.push(i);
+  }
+  return (
+    <div className="absolute top-0 overflow-hidden w-full min-h-screen -z-10">
+      <div className="  w-full min-h-screen  origin-center rotate-45 hidden dark:block">
+        {list.map((index) => (
+          <div key={index} className="shooting_star">
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};

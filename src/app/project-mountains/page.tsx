@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import Moon from "./Moon";
 import { Grid2x2, List } from "lucide-react";
 import Grid from "./Grid";
-import { default as ListGroup } from "./List";
+import ListGroup from "./List";
 
 const Projects = () => {
   const [isTame, setIsTime] = useState(false);
