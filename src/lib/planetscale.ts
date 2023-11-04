@@ -9,4 +9,6 @@ const config = {
 }
 
 const conn = connect(config)
+/*
 const results = await conn.execute('select 1 from dual where 1=?', [1])
+*/
