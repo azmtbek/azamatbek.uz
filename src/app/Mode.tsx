@@ -9,6 +9,7 @@ const Mode = () => {
   const toggleMode = () => {
     setMode((prev) => (prev + 1) % 2);
   };
+
   return (
     <Button
       variant="ghost"
