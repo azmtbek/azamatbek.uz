@@ -1,23 +1,24 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import useMode from "@/store/useMode";
 import React, { useState } from "react";
 
 const OPTIONS = ["adventure", "simple"];
 
 const Mode = () => {
-  const [mode, setMode] = useState(0);
+  const { mode, setMode } = useMode();
   const toggleMode = () => {
-    setMode((prev) => (prev + 1) % 2);
+    setMode((mode == OPTIONS[0]) ? OPTIONS[1] : OPTIONS[0]);
   };
 
   return (
     <Button
-      variant="ghost"
+      variant="outline"
       className="fixed top-9 left-20 z-10"
       onClick={() => toggleMode()}
     >
-      {OPTIONS[mode] === "simple" && "Simple Mode"}
-      {OPTIONS[mode] === "adventure" && "Adventure Mode"}
+      {mode === "simple" && "Simple Mode"}
+      {mode === "adventure" && "Adventure Mode"}
     </Button>
   );
 };

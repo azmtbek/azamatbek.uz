@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 
 type Store = {
-  path: string
+  path: string,
   setPath: (prev: string) => void
 }
 
