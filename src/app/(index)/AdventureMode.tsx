@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Contact from "./contact-sea/Contact";
+import Contact from "../contact/Contact";
 import Link from "next/link";
 import usePrevPath from "@/store/usePrevPath";
+
 import useHaveBeen, { isInPath } from "@/store/useHaveBeen";
 import useElementsOnScreen from "@/hooks/useElementsOnScreen";
 import {
@@ -16,7 +17,7 @@ import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 
 import { TimerReset } from "lucide-react";
-import { Stars } from "./Stars";
+import { Stars } from "../Stars";
 
 const AdventureMode = () => {
   const [isTame, setIsTime] = useState(false);
@@ -47,7 +48,7 @@ const AdventureMode = () => {
   }, [isVisible, addPath, paths]);
 
   return (
-    <div>
+    <>
       <main
         id="main"
         className={cn(
@@ -97,7 +98,7 @@ const AdventureMode = () => {
         <Contact />
         <div ref={theRef}></div>
       </section>
-    </div>
+    </>
   );
 };
 

@@ -5,9 +5,7 @@ export const SimpleMode = () => {
   return (
     <div className="flex min-h-screen flex-col items-center justify-between py-10">
       <div className="flex ">
-        <Link href="projects">Projects</Link>
-        <Link href="blog">Blog</Link>
-        <Link href="contact">Contact</Link>
+        Hello
       </div>
     </div>
   );
