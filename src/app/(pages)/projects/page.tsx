@@ -7,6 +7,7 @@ import Moon from "./Moon";
 import { Grid2x2, List } from "lucide-react";
 import Grid from "./Grid";
 import ListGroup from "./List";
+import Mountains from "./Mountains";
 
 const Projects = () => {
   const [isTame, setIsTime] = useState(false);
@@ -64,6 +65,7 @@ const Projects = () => {
         {(view === "grid") && <Grid />}
         {(view === "list") && <ListGroup />}
       </div>
+      <Mountains />
     </div>
   );
 };

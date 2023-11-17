@@ -33,6 +33,10 @@
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
+
+
+    --font-sans: 'Calibre', 'Inter', 'San Francisco', 'SF Pro Text', -apple-system, system-ui, sans-serif;
+    --font-mono: 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', monospace;
   }
 
   .dark {
@@ -81,7 +85,13 @@
 }
 
 @layer components {
+  .font-mono {
+    font-family: var(--font-mono);
+  }
 
+  .font-sans {
+    font-family: var(--font-sans);
+  }
 
   .sun {
     position: absolute;

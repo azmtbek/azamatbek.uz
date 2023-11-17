@@ -2,6 +2,8 @@
 import { Button } from "@/components/ui/button";
 import useMode from "@/store/useMode";
 import React, { useState } from "react";
+import MapMenu from "./Map";
+import Navbar from "./Navbar";
 
 const OPTIONS = ["adventure", "simple"];
 
@@ -12,6 +14,9 @@ const Mode = () => {
   };
 
   return (
+    <>
+    {mode == "adventure" && <MapMenu />}
+    {mode == "simple" && <Navbar />}
     <Button
       variant="outline"
       className="fixed top-9 left-20 z-10"
@@ -19,7 +24,8 @@ const Mode = () => {
     >
       {mode === "simple" && "Simple Mode"}
       {mode === "adventure" && "Adventure Mode"}
-    </Button>
+      </Button>
+    </>
   );
 };
 

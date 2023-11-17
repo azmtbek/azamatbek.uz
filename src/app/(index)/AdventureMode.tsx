@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Contact from "../contact/Contact";
+import Contact from "../(pages)/contact/Contact";
 import Link from "next/link";
 import usePrevPath from "@/store/usePrevPath";
 
