@@ -7,8 +7,9 @@ import { Toaster } from "@/components/ui/toaster";
 import Mode from "./Mode";
 import useMode from "@/store/useMode";
 import { Metadata } from "next";
+import MovingPoint from './MovingPoint';
 
-// const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Azamatbek",
   description: "Azamatbek's portfolio website",
@@ -21,12 +22,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn('font-sans', "relative m-0 p-0")}>
+      <body className={cn(inter.className, "relative m-0 p-0")}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+           <MovingPoint >
           <ThemeButton />
           <Mode />
-          {children}
+            {children}
           <Toaster />
+          </MovingPoint>
         </ThemeProvider>
       </body>
     </html>
