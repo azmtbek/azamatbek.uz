@@ -37,13 +37,7 @@ export default function MovingDot({ children }: { children: React.ReactNode; }) 
       y: e.clientY
     });
   }}
-    //  onMouseMove={(e:any) => {
-    //   console.log(position)
-    // setPosition({
-    //   x: e.clientX,
-    //   y: e.clientY
-    // });
-    // }}
+    
     // ref={ref}
     style={{
       position: 'relative',
