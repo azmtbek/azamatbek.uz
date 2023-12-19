@@ -38,10 +38,8 @@ export default function MovingDot({ children }: { children: React.ReactNode; }) 
     });
   }}
     
-    // ref={ref}
     style={{
       position: 'relative',
-      // cursor:'none'
       }}>
     {/* <Sword */}
      <div
