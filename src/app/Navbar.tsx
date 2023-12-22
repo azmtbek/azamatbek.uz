@@ -13,7 +13,7 @@ const Navbar = () => {
           Thoughts
         </Link>
         <Link href="contact">
-          Contacts
+          Find me in
         </Link>
       </div>
     </div>
