@@ -7,7 +7,7 @@ import { Toaster } from "@/components/ui/toaster";
 import Mode from "./mode-switcher";
 import useMode from "@/store/useMode";
 import { Metadata } from "next";
-import MovingPoint from './MovingPoint';
+import MovingPoint from './moving-point';
 
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {

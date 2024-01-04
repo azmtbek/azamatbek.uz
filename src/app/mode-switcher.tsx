@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import useMode from "@/store/useMode";
 import React, { useState } from "react";
-import MapMenu from "./Map";
+import MapMenu from "./map";
 import Navbar from "./Navbar";
 
 const OPTIONS = ["adventure", "simple"];
