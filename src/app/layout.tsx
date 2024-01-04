@@ -4,7 +4,7 @@ import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/themes-provider";
 import { ThemeButton } from "./ThemeButton";
 import { Toaster } from "@/components/ui/toaster";
-import Mode from "./Mode";
+import Mode from "./mode-switcher";
 import useMode from "@/store/useMode";
 import { Metadata } from "next";
 import MovingPoint from './MovingPoint';
