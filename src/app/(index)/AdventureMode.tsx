@@ -18,14 +18,10 @@ import { cn } from "@/lib/utils";
 
 import { TimerReset } from "lucide-react";
 import { Stars } from "../Stars";
+import useTimerCount from "@/hooks/useTimerCount";
 
 const AdventureMode = () => {
-  const [isTame, setIsTime] = useState(false);
-  useEffect(() => {
-    setTimeout(() => {
-      setIsTime(true);
-    }, 0);
-  });
+  const isTime = useTimerCount()
 
   const { paths, resetPaths, addPath, progress } = useHaveBeen();
   const { setPath } = usePrevPath();
@@ -49,12 +45,13 @@ const AdventureMode = () => {
 
   return (
     <>
+
       <main
         id="main"
         className={cn(
           "flex min-h-screen flex-col items-center justify-between py-24",
-          "transition duration-1000 -translate-y-96 opacity-0",
-          isTame && "opacity-100 translate-y-0",
+          "transition duration-1000 opacity-0",
+          isTime && "opacity-100",
         )}
       >
         <Stars />

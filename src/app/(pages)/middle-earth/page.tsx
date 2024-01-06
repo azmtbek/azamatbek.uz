@@ -1,5 +1,6 @@
 "use client";
 
+import useTimerCount from "@/hooks/useTimerCount";
 import { cn } from "@/lib/utils";
 import useHaveBeen from "@/store/useHaveBeen";
 import usePrevPath from "@/store/usePrevPath";
@@ -8,19 +9,14 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const MiddleEarth = () => {
-  const [isTame, setIsTime] = useState(false);
-  const { path } = usePrevPath();
+  const isTime = useTimerCount()
 
   const { addPath } = useHaveBeen();
   useEffect(() => {
     addPath("/middle-earth");
   }, [addPath]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsTime(true);
-    }, 0);
-  });
+
 
   return (
     <section
@@ -28,8 +24,7 @@ const MiddleEarth = () => {
       className={cn(
         "flex min-h-screen flex-col items-center justify-between p-24",
         "transition duration-1000 opacity-0",
-        path === "contact-sea" ? "-translate-y-full" : " translate-y-full",
-        isTame && "opacity-100 translate-y-0",
+        isTime && "opacity-100",
       )}
     >
       <Link href="/">
@@ -41,18 +36,18 @@ const MiddleEarth = () => {
         <Sprout /> Middle Earth
       </h1>
       <div className="flex justify-between items-center w-full">
-        <Link href="/project-mountains">
+        <Link href="/projects">
           <div className="animate-pulse">
             <MountainSnow />
             Projecty Mountains
           </div>
         </Link>
-        <Link href="/thoughts-forest">
+        <Link href="/blog">
           <Trees />
           <div className="animate-pulse">Thoughts Forest</div>
         </Link>
       </div>
-      <Link href="/contact-sea">
+      <Link href="/contact">
         <Waves />
         <div className="animate-pulse">the Contact Sea</div>
       </Link>

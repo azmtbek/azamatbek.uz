@@ -6,9 +6,10 @@ import { Grid2x2, List } from "lucide-react";
 import { useTheme } from "next-themes";
 import React, { useEffect, useState } from "react";
 import ListGroup from "@/components/List";
+import useTimerCount from "@/hooks/useTimerCount";
 
 function Self() {
-  const [isTame, setIsTime] = useState(false);
+  const isTime = useTimerCount()
   const [view, setView] = useState("grid");
 
   const { theme } = useTheme();
@@ -18,11 +19,6 @@ function Self() {
     addPath("/thoughts-forest");
   }, [addPath]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsTime(true);
-    }, 0);
-  });
 
   const onChangeView = (view: string) => {
     setView(view);
@@ -32,8 +28,8 @@ function Self() {
       <div
         className={cn(
           "flex min-h-screen flex-col items-center justify-between py-12 mx-0",
-          "transition duration-1000 translate-x-full opacity-0",
-          isTame && "opacity-100 translate-x-0",
+          "transition duration-1000 opacity-0",
+          isTime && "opacity-100",
         )}
       >
         {theme == "light" && <div className="sun top-20 left-10 -z-10"></div>}

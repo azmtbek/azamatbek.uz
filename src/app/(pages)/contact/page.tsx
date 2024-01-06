@@ -7,19 +7,15 @@ import Contact from "./Contact";
 import usePrevPath from "@/store/usePrevPath";
 import useHaveBeen from "@/store/useHaveBeen";
 import useMode from "@/store/useMode";
+import useTimerCount from "@/hooks/useTimerCount";
 
 const ContactSea = () => {
-  const [isTame, setIsTime] = useState(false);
+  const isTime = useTimerCount()
   const { addPath } = useHaveBeen();
   const { mode } = useMode();
   useEffect(() => {
     addPath("/contact-sea");
   }, [addPath]);
-  useEffect(() => {
-    setTimeout(() => {
-      setIsTime(true);
-    }, 0);
-  });
   const { setPath } = usePrevPath();
   const onClickLink = () => {
     setPath("contact-sea");
@@ -29,8 +25,8 @@ const ContactSea = () => {
       id="contact"
       className={cn(
         "flex min-h-screen flex-col items-center justify-between py-12 my-0",
-        "transition duration-1000 translate-y-full opacity-0",
-        isTame && "opacity-100 translate-y-0",
+        "transition duration-1000 opacity-0",
+        isTime && "opacity-100",
       )}
     >
       {mode == "adventure" && (
