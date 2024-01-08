@@ -5,9 +5,10 @@ type Store = {
   setMode: (mode: string) => void
 }
 
+// modes: 'simple', 'adventure'
 
 const useMode = create<Store>((set) => ({
-  mode: 'simple',
+  mode: 'adventure',
   setMode: (mode) => set((state) => ({ mode: mode })),
 }))
 

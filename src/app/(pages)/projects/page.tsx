@@ -8,9 +8,10 @@ import { Grid2x2, List } from "lucide-react";
 import Grid from "./Grid";
 import ListGroup from "./List";
 import Mountains from "./Mountains";
+import useTimerCount from "@/hooks/useTimerCount";
 
 const Projects = () => {
-  const [isTame, setIsTime] = useState(false);
+  const isTime = useTimerCount();
   const [view, setView] = useState("grid");
   const [theme, setTheme] = useState<string | undefined>("");
   const { addPath } = useHaveBeen();
@@ -18,11 +19,6 @@ const Projects = () => {
   useEffect(() => {
     addPath("/project-mountains");
   }, [addPath]);
-  useEffect(() => {
-    setTimeout(() => {
-      setIsTime(true);
-    }, 0);
-  });
   useEffect(() => {
     setTheme(myTheme);
   }, [myTheme]);
@@ -34,9 +30,9 @@ const Projects = () => {
   return (
     <div
       className={cn(
-        "flex min-h-screen flex-col items-center justify-start py-12 my-0",
-        "transition duration-1000 -translate-x-full opacity-0",
-        isTame && "opacity-100 translate-x-0",
+        "flex min-h-screen flex-col items-center justify-start py-32",
+        "transition duration-1000  opacity-0",
+        isTime && "opacity-100",
       )}
     >
       {theme == "dark" && <Moon />}
