@@ -12,7 +12,7 @@ export const SimpleMode = () => {
         "transition duration-1000 opacity-0",
         isTime && "opacity-100",)}>
         <div className="flex">
-          Hello
+          WIP: Work In Proggress
         </div>
       </div>
     </>
