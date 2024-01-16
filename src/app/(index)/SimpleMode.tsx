@@ -11,7 +11,7 @@ export const SimpleMode = () => {
       <div className={cn("flex min-h-screen flex-col items-center justify-between py-10",
         "transition duration-1000 opacity-0",
         isTime && "opacity-100",)}>
-        <div className="flex">
+        <div className="flex pt-10">
           WIP: Work In Proggress
         </div>
       </div>
