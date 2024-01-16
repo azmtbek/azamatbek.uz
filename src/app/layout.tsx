@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/themes-provider";
-import { ThemeButton } from "./ThemeButton";
+import { ThemeButton } from "./theme-button";
 import { Toaster } from "@/components/ui/toaster";
 import Mode from "./mode-switcher";
 import useMode from "@/store/useMode";
@@ -24,11 +24,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={cn(inter.className, "relative m-0 p-0")}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-           <MovingPoint >
-          <ThemeButton />
-          <Mode />
+          <MovingPoint >
+            <ThemeButton />
+            <Mode />
             {children}
-          <Toaster />
+            <Toaster />
           </MovingPoint>
         </ThemeProvider>
       </body>

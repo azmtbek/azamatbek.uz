@@ -2,7 +2,7 @@ import useTimerCount from "@/hooks/useTimerCount";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import Navbar from "../Navbar";
+
 
 export const SimpleMode = () => {
   const isTime = useTimerCount()

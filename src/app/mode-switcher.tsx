@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import useMode from "@/store/useMode";
 import React, { useState } from "react";
 import MapMenu from "./map";
-import Navbar from "./Navbar";
+import Navbar from "./navbar";
 import useTimerCount from "@/hooks/useTimerCount";
 
 const OPTIONS = ["adventure", "simple"];
