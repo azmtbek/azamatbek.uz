@@ -7,28 +7,31 @@ const Navbar = () => {
   const pathname = usePathname()
   return (
     <>
-      <div className="fixed top-0 inset-x-1/3 w-max z-10">
+      <div className="fixed top-0 inset-x-1/3 w-max z-10 bg-background">
         <div className="py-3" />
         <div className="flex gap-10 p-3 mx-3 justify-center w-full">
-          <Link href="/">
-            <Button variant={pathname == '/' ? "outline" : 'ghost'}  >
-              <span className="text-lg">Home</span>
-            </Button>
-          </Link>
-          <Button variant={pathname == '/projects' ? "outline" : 'ghost'} ><Link href="projects">
-            <span className="text-lg">projects</span>
-          </Link></Button>
-          <Button variant={pathname == '/blog' ? "outline" : 'ghost'} ><Link href="blog">
-            <span className="text-lg">blog</span>
-          </Link></Button>
-          <Button variant={pathname == '/contact' ? "outline" : 'ghost'} ><Link href="contact">
-            <span className="text-lg">contact</span>
-          </Link></Button>
+          <NavLink pathname={pathname} label='home' href='/' />
+          <NavLink pathname={pathname} label='projects' href='/projects' />
+          <NavLink pathname={pathname} label='blog' href='/blog' />
+          <NavLink pathname={pathname} label='contact' href='/contact' />
         </div>
       </div>
       <div className="py-10"></div>
     </>
   );
 };
+
+type NavLink = {
+  pathname: string,
+  href: string,
+  label: string
+}
+const NavLink = ({ pathname, href, label }: NavLink) => {
+  return <Link href={href}>
+    <Button variant={pathname === href ? "outline" : 'ghost'}  >
+      <span className="text-xl capitalize">{label}</span>
+    </Button>
+  </Link>
+}
 
 export default Navbar;
