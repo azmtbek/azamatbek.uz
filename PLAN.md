@@ -1,53 +1,185 @@
-# Project Plan: Develop a Personal Blog using shadcn/ui on TanStack.
+# Refactor Plan: Simple Blog Website
 
-## 📝 Goal & Scope
-*A brief description of what this project aims to achieve and its boundaries.*
+## Goal
 
-**Objective:** To create a modern, functional, and automated blogging platform that serves as a portfolio and a continuous learning diary for agentic AI concepts.
-**Scope:** 
-* **In Scope:** Blog posting functionality (CMS integration), user-friendly interface using `shadcn/ui`, data state management via TanStack Query/Router, robust automation (CI/CD setup, linting rules).
-* **Out of Scope (for MVP):** Advanced user roles (e.g., commenting system by general public), complex payment features, dedicated e-commerce integration.
+Simplify the current over-engineered portfolio into a clean, functional blog site. Strip adventure-mode complexity, fix the broken dependency tree, implement real markdown blog rendering, and leave a maintainable codebase.
 
 ---
 
-## ✅ To-Do List / Roadmap
-*List all tasks needed to complete the project. Use a consistent format for tracking completion (e.g., [ ]).*
+## Phase 1 — Fix Broken Foundations
 
-### Phase 0: Initial Deployment & Architecture Setup (Goal: Live MVP on GCP)
-- [ ] **Tech Stack Initialization:** Set up the basic Next.js/React + shadcn boilerplate project structure.
-- [ ] **Deployment Pipeline:** Configure initial CI/CD pipeline (e.g., GitHub Actions) to deploy a static site successfully to Google Cloud Platform (GCP). *Crucial step for early publishing.*
-- [ ] **Core Page Structure:** Create the basic Home page, About page, and Blog Listing index using placeholder data.
+**Problem:** `package.json` is missing nearly every library the code actually imports. The project will not build.
 
-### Phase 1: Basic Content Display & Local Experience (The Reading MVP)
-- [ ] **Post Data Model:** Define the structure of a blog post (title, content, date).
-- [ ] **Markdown/MDX Implementation:** Implement front matter handling and render local markdown files into view components.
-- [ ] **Routing:** Use TanStack Router to map URLs to specific blog posts (`/blog/[slug]`).
+### Steps
 
-### Phase 2: Content Creation & Automation (The Writing Experience)
-- [ ] **Draft Editor Component:** Build a rich text editor simulation or component for composing new posts.
-- [ ] **Local Persistence:** Implement local data saving mechanisms (e.g., writing to `drafts` folder).
-- [ ] **Linting & Pre-commit Hooks:** Set up robust linting rules and git hooks to enforce code quality automatically.
-
-### Phase 3: Refinement & Unique Feature Implementation
-- [ ] **Learning Log Integration:** Build the dedicated section that tracks the journey of learning agentic programming concepts, making it a core feature.
-- [ ] **UI Polish:** Enhance aesthetics using remaining `shadcn/ui` components (e.g., optimized typography, dark mode).
+- [ ] Audit and update `package.json` — add all missing runtime dependencies:
+  - `zustand` (state)
+  - `next-themes` (theme persistence)
+  - `clsx` + `tailwind-merge` (classname utils)
+  - `lucide-react` (icons)
+  - `react-hook-form` + `@hookform/resolvers` + `zod` (admin forms)
+  - `gray-matter` (markdown frontmatter parsing)
+  - `remark` + `remark-html` (markdown-to-HTML rendering)
+  - `@radix-ui/*` packages required by shadcn/ui components
+- [ ] Run `npm install` and verify `npm run build` passes
+- [ ] Delete duplicate files:
+  - Remove `src/app/Navbar.tsx` (keep lowercase `src/app/navbar.tsx`)
+  - Remove `src/components/Grid.tsx` and `src/components/List.tsx`
 
 ---
 
-## 💡 Key Decisions & Notes
-*A place to record important architectural decisions, assumptions, or research findings.*
+## Phase 2 — Remove Adventure Mode Complexity
 
-**Decision:** Use Next.js framework for development due to its robust support for Static Site Generation (SSG) and excellent developer experience with shadcn/ui components.
-**Hosting Target:** Firebase Hosting is selected as the primary deployment target within GCP. This offers superior ease of use, highly effective static site hosting for blogs, and an optimal cost-to-performance ratio compared to Cloud Run for our MVP phase.
+**Problem:** Gamified navigation (progress bars, path gating, Zustand stores, Stars, Mountains, Moon, MovingPoint) adds hundreds of lines of maintenance burden with no blog value.
+
+### Files to delete
+
+| File | Reason |
+|------|--------|
+| `src/app/(index)/AdventureMode.tsx` | Replaced by simple home |
+| `src/app/(index)/SimpleMode.tsx` | WIP, unused |
+| `src/app/(index)/Main.tsx` | No longer needed |
+| `src/app/map.tsx` | Adventure map dialog |
+| `src/app/mode-switcher.tsx` | Adventure/simple toggle |
+| `src/app/moving-point.tsx` | Mostly commented-out, decorative |
+| `src/app/Stars.tsx` + `Stars.module.css` | Decorative only |
+| `src/app/(pages)/projects/Mountains.tsx` | Decorative only |
+| `src/app/(pages)/projects/Moon.tsx` | Decorative only |
+| `src/app/(pages)/middle-earth/` | Fantasy-named hub page |
+| `src/app/(pages)/arcade/` | Empty placeholder |
+| `src/store/useHaveBeen.ts` | Path-gating progress logic |
+| `src/store/usePrevPath.ts` | Never read anywhere |
+| `src/store/useMode.ts` | No longer two modes |
+| `src/icon/sword.tsx` | Never used |
+| `src/hooks/useElementsOnScreen.tsx` | Only used for adventure scroll trigger |
+| `src/lib/planetscale.ts` | TODO stub, no DB planned |
+
+### Files to simplify
+
+- [ ] `src/app/layout.tsx` — remove `ModeSwitcher`, `MovingPoint` wrapper; keep `ThemeProvider`, `Navbar`, `ThemeButton`
+- [ ] `src/app/(index)/page.tsx` — render a simple `<Home />` component directly
 
 ---
 
-## 📅 Milestones / Deadlines (Optional)
-*Major checkpoints for the project.*
+## Phase 3 — Implement Real Blog
 
-- Milestone 1: Working basic site deployed to Staging on Firebase Hosting (End of Phase 0/Start of Phase 1).
-- Milestone 2: Ability to draft and render a new post locally without deployment issues (End of Phase 1).
+**Problem:** `posts/` directory exists with markdown files but nothing reads or renders them.
 
-***
+### Tasks
 
-**Status:** On Track | At Risk | Blocked
+- [ ] Create **`src/lib/posts.ts`** with two functions:
+  - `getAllPosts()` — reads `posts/*.md`, parses frontmatter with `gray-matter`, returns array sorted by date
+  - `getPostBySlug(slug)` — reads one post, converts body to HTML with `remark`
+- [ ] Adopt this frontmatter convention for `posts/*.md`:
+  ```markdown
+  ---
+  title: "Post Title"
+  date: "2026-01-15"
+  description: "One-line summary shown in listing"
+  tags: ["tag1", "tag2"]
+  ---
+  ```
+- [ ] Update **`src/app/(pages)/blog/page.tsx`** — server component, call `getAllPosts()`, render real post list
+- [ ] Create **`src/app/(pages)/blog/[slug]/page.tsx`** — dynamic route, call `getPostBySlug(slug)`, render HTML, add `generateStaticParams`
+- [ ] Create **`src/app/(pages)/blog/PostCard.tsx`** — single reusable card replacing both `Grid.tsx` and `List.tsx`
+
+---
+
+## Phase 4 — Simplify Navigation & Routing
+
+**Problem:** Routes use fantasy names; navigation is split across two modes.
+
+### Route changes
+
+| Old | New |
+|-----|-----|
+| `/middle-earth` | removed (use `/projects`) |
+| Contact Sea page title | rename to just "Contact" |
+| `/arcade` | removed |
+
+### Navbar tasks
+
+- [ ] Update `src/app/navbar.tsx` links: Home `/`, Blog `/blog`, Projects `/projects`, Contact `/contact`
+- [ ] Remove any `MapMenu` / adventure import from layout
+
+---
+
+## Phase 5 — Clean Up Components & State
+
+- [ ] Drop Zustand entirely if no global state remains after Phase 2 (`next-themes` covers theme state)
+- [ ] Rename `src/hooks/useTimerCount.tsx` → `src/hooks/useMounted.ts` for clarity
+- [ ] Audit `src/components/ui/` — remove shadcn components that are only referenced by deleted files
+- [ ] Admin pages (`src/app/(admin)/`) — keep but stub out the empty `thoughts/` page with a basic form matching `projects/` editor
+
+---
+
+## Phase 6 — Polish
+
+- [ ] Write a real home page: name, bio, links to blog and projects, theme toggle
+- [ ] Add `generateMetadata` to blog listing and individual post pages for SEO
+- [ ] Verify `not-found.tsx` renders cleanly after route removals
+- [ ] Update `README.md` with new structure and dev commands
+
+---
+
+## Target File Structure
+
+```
+src/
+├── app/
+│   ├── (admin)/
+│   │   ├── here/
+│   │   │   ├── layout.tsx
+│   │   │   ├── page.tsx
+│   │   │   ├── projects/page.tsx
+│   │   │   └── thoughts/page.tsx
+│   │   └── why/page.tsx
+│   ├── (index)/
+│   │   └── page.tsx              ← simple home
+│   ├── (pages)/
+│   │   ├── layout.tsx
+│   │   ├── blog/
+│   │   │   ├── page.tsx          ← lists all posts
+│   │   │   ├── [slug]/page.tsx   ← renders single post  (NEW)
+│   │   │   └── PostCard.tsx      ← card component       (NEW)
+│   │   ├── projects/
+│   │   │   └── page.tsx
+│   │   └── contact/
+│   │       ├── page.tsx
+│   │       └── Contact.tsx
+│   ├── layout.tsx
+│   ├── globals.css
+│   ├── not-found.tsx
+│   ├── navbar.tsx
+│   └── theme-button.tsx
+│
+├── components/
+│   └── ui/                       ← only shadcn components actually used
+│
+├── hooks/
+│   └── useMounted.ts             ← renamed from useTimerCount
+│
+├── lib/
+│   ├── utils.ts
+│   └── posts.ts                  ← NEW: markdown reading utilities
+│
+└── icon/
+    └── leetcode.tsx
+
+posts/                            ← markdown content
+```
+
+---
+
+## Execution Order
+
+| # | Phase | Effort | Risk |
+|---|-------|--------|------|
+| 1 | Fix `package.json` + install deps | Low | Medium — build may surface more issues |
+| 2 | Delete adventure-mode files | Low | Low — isolated code |
+| 3 | Implement markdown blog | Medium | Low |
+| 4 | Simplify routing & navbar | Low | Low |
+| 5 | Clean up components & state | Medium | Low |
+| 6 | Polish home page + SEO | Low | Low |
+
+Start with Phase 1 (un-breaks the build) then Phase 2 (clears the noise) before writing new code in Phases 3–6.
