@@ -10,8 +10,8 @@ const links = [
 export default function Header() {
 	return (
 		<header className="border-b px-6 py-4">
-			<nav className="max-w-3xl mx-auto flex flex-wrap items-center gap-x-8 gap-y-3">
-				<Link to="/" className="font-semibold text-sm mr-auto">
+			<nav aria-label="Main navigation" className="max-w-3xl mx-auto flex flex-wrap items-center gap-x-8 gap-y-3">
+				<Link to="/" aria-label="Home" className="font-semibold text-sm mr-auto">
 					azamatbek.uz
 				</Link>
 				<ul className="flex items-center gap-5 flex-wrap">
@@ -20,7 +20,7 @@ export default function Header() {
 							<Link
 								to={to}
 								className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-								activeProps={{ className: "text-sm text-foreground font-medium" }}
+								activeProps={{ className: "text-sm text-foreground font-medium", "aria-current": "page" }}
 								activeOptions={to === "/" ? { exact: true } : undefined}
 							>
 								{label}

@@ -5,10 +5,13 @@
   "packageManager": "pnpm@9.15.4",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
+    "predev": "npx tsx scripts/generate-feeds.ts",
     "dev": "vite dev --port 3000",
+    "prebuild": "npx tsx scripts/generate-feeds.ts",
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run",
+    "test:build": "pnpm build && vitest run src/tests/build.test.ts",
     "format": "biome format",
     "lint": "biome lint",
     "check": "biome check"
@@ -18,10 +21,8 @@
     "@tanstack/react-devtools": "^0.7.0",
     "@tanstack/react-router": "^1.132.0",
     "@tanstack/react-router-devtools": "^1.132.0",
-    "@tanstack/react-router-ssr-query": "^1.131.7",
     "@tanstack/react-start": "^1.132.0",
     "@tanstack/router-plugin": "^1.132.0",
-    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.544.0",
@@ -47,7 +48,6 @@
     "jsdom": "^27.0.0",
     "typescript": "^5.7.2",
     "vite": "^7.1.7",
-    "vitest": "^3.0.5",
-    "web-vitals": "^5.1.0"
+    "vitest": "^3.0.5"
   }
 }

@@ -2,7 +2,17 @@ import { Link, createFileRoute } from "@tanstack/react-router"
 
 export const Route = createFileRoute("/")({
 	head: () => ({
-		meta: [{ title: "Azamatbek Mamarajabov" }, { name: "description", content: "Software engineer. Writing about web development and things I find interesting." }],
+		meta: [
+			{ title: "Azamatbek Mamarajabov" },
+			{ name: "description", content: "Software engineer. Writing about web development and things I find interesting." },
+			{ property: "og:title", content: "Azamatbek Mamarajabov" },
+			{ property: "og:description", content: "Software engineer. Writing about web development and things I find interesting." },
+			{ property: "og:type", content: "website" },
+			{ property: "og:url", content: "https://azamatbek.uz/" },
+			{ name: "twitter:card", content: "summary" },
+			{ name: "twitter:title", content: "Azamatbek Mamarajabov" },
+			{ name: "twitter:description", content: "Software engineer. Writing about web development and things I find interesting." },
+		],
 	}),
 	component: Home,
 })

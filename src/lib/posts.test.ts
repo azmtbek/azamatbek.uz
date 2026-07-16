@@ -23,6 +23,7 @@ describe("getAllPosts()", () => {
 		expect(post?.date).toBe("2026-07-16")
 		expect(post?.description).toBe("A first post to kick things off.")
 		expect(post?.tags).toContain("meta")
+		expect(post?.readingTime).toBeGreaterThanOrEqual(1)
 	})
 
 	it("sorts posts by date descending", () => {
@@ -70,7 +71,7 @@ describe("getPostBySlug()", () => {
 		expect(post?.content).toContain("Welcome to the blog")
 	})
 
-	it("returns post with all required fields", async () => {
+	it("returns post with all required fields including readingTime", async () => {
 		const post = await getPostBySlug("getting-started")
 		expect(post).toMatchObject({
 			slug: expect.any(String),
@@ -79,6 +80,8 @@ describe("getPostBySlug()", () => {
 			description: expect.any(String),
 			tags: expect.any(Array),
 			content: expect.any(String),
+			readingTime: expect.any(Number),
 		})
+		expect(post?.readingTime).toBeGreaterThanOrEqual(1)
 	})
 })

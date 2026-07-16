@@ -12,6 +12,7 @@ export interface PostMeta {
 	date: string
 	description: string
 	tags: string[]
+	readingTime: number
 }
 
 export interface Post extends PostMeta {
@@ -21,38 +22,50 @@ export interface Post extends PostMeta {
 export function getAllPosts(): PostMeta[] {
 	if (!fs.existsSync(postsDir)) return []
 
-	return fs
-		.readdirSync(postsDir)
-		.filter((f) => f.endsWith(".md"))
-		.map((filename) => {
-			const slug = filename.replace(/\.md$/, "")
-			const raw = fs.readFileSync(path.join(postsDir, filename), "utf-8")
-			const { data } = matter(raw)
-			return {
-				slug,
-				title: data.title ?? slug,
-				date: data.date ?? "",
-				description: data.description ?? "",
-				tags: data.tags ?? [],
-			} satisfies PostMeta
-		})
-		.sort((a, b) => (a.date < b.date ? 1 : -1))
+	try {
+		return fs
+			.readdirSync(postsDir)
+			.filter((f) => f.endsWith(".md"))
+			.map((filename) => {
+				const slug = filename.replace(/\.md$/, "")
+				const raw = fs.readFileSync(path.join(postsDir, filename), "utf-8")
+				const { data, content: body } = matter(raw)
+				const wordCount = body.split(/\s+/).filter(Boolean).length
+				return {
+					slug,
+					title: data.title ?? slug,
+					date: data.date ?? "",
+					description: data.description ?? "",
+					tags: data.tags ?? [],
+					readingTime: Math.max(1, Math.ceil(wordCount / 200)),
+				} satisfies PostMeta
+			})
+			.sort((a, b) => (new Date(a.date) < new Date(b.date) ? 1 : -1))
+	} catch {
+		return []
+	}
 }
 
 export async function getPostBySlug(slug: string): Promise<Post | null> {
 	const filepath = path.join(postsDir, `${slug}.md`)
 	if (!fs.existsSync(filepath)) return null
 
-	const raw = fs.readFileSync(filepath, "utf-8")
-	const { data, content: body } = matter(raw)
-	const processed = await remark().use(html).process(body)
+	try {
+		const raw = fs.readFileSync(filepath, "utf-8")
+		const { data, content: body } = matter(raw)
+		const processed = await remark().use(html).process(body)
+		const wordCount = body.split(/\s+/).filter(Boolean).length
 
-	return {
-		slug,
-		title: data.title ?? slug,
-		date: data.date ?? "",
-		description: data.description ?? "",
-		tags: data.tags ?? [],
-		content: processed.toString(),
+		return {
+			slug,
+			title: data.title ?? slug,
+			date: data.date ?? "",
+			description: data.description ?? "",
+			tags: data.tags ?? [],
+			readingTime: Math.max(1, Math.ceil(wordCount / 200)),
+			content: processed.toString(),
+		}
+	} catch {
+		return null
 	}
 }

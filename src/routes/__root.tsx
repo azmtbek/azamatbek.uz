@@ -25,6 +25,12 @@ export const Route = createRootRoute({
         rel: 'stylesheet',
         href: appCss,
       },
+      {
+        rel: 'alternate',
+        type: 'application/rss+xml',
+        title: "Azamatbek's Blog",
+        href: '/rss.xml',
+      },
     ],
   }),
 
@@ -38,19 +44,20 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-background focus:text-foreground focus:rounded focus:outline-none focus:ring-2 focus:ring-ring"
+        >
+          Skip to content
+        </a>
         <Header />
-        {children}
-        <TanStackDevtools
-          config={{
-            position: 'bottom-right',
-          }}
-          plugins={[
-            {
-              name: 'Tanstack Router',
-              render: <TanStackRouterDevtoolsPanel />,
-            },
-          ]}
-        />
+        <div id="main-content">{children}</div>
+        {import.meta.env.DEV && (
+          <TanStackDevtools
+            config={{ position: 'bottom-right' }}
+            plugins={[{ name: 'Tanstack Router', render: <TanStackRouterDevtoolsPanel /> }]}
+          />
+        )}
         <Scripts />
       </body>
     </html>

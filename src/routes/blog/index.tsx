@@ -6,7 +6,17 @@ const fetchPosts = createServerFn({ method: "GET" }).handler(() => getAllPosts()
 
 export const Route = createFileRoute("/blog/")({
 	head: () => ({
-		meta: [{ title: "Blog — Azamatbek" }, { name: "description", content: "Writing on web development, systems, and things I find interesting." }],
+		meta: [
+			{ title: "Blog — Azamatbek" },
+			{ name: "description", content: "Writing on web development, systems, and things I find interesting." },
+			{ property: "og:title", content: "Blog — Azamatbek" },
+			{ property: "og:description", content: "Writing on web development, systems, and things I find interesting." },
+			{ property: "og:type", content: "website" },
+			{ property: "og:url", content: "https://azamatbek.uz/blog" },
+			{ name: "twitter:card", content: "summary" },
+			{ name: "twitter:title", content: "Blog — Azamatbek" },
+			{ name: "twitter:description", content: "Writing on web development, systems, and things I find interesting." },
+		],
 	}),
 	loader: () => fetchPosts(),
 	component: BlogListing,
@@ -29,9 +39,27 @@ function BlogListing() {
 									{post.title}
 								</h2>
 							</Link>
-							<p className="text-xs text-muted-foreground mb-2">{post.date}</p>
+							<div className="flex items-center gap-3 mb-2">
+								<p className="text-xs text-muted-foreground">{post.date}</p>
+								<span className="text-xs text-muted-foreground">·</span>
+								<p className="text-xs text-muted-foreground">{post.readingTime} min read</p>
+							</div>
 							{post.description && (
-								<p className="text-sm text-muted-foreground">{post.description}</p>
+								<p className="text-sm text-muted-foreground mb-3">{post.description}</p>
+							)}
+							{post.tags.length > 0 && (
+								<div className="flex flex-wrap gap-2">
+									{post.tags.map((tag) => (
+										<Link
+											key={tag}
+											to="/blog/tags/$tag"
+											params={{ tag }}
+											className="text-xs px-2 py-0.5 rounded-full border border-border text-muted-foreground hover:text-foreground hover:border-foreground transition-colors"
+										>
+											{tag}
+										</Link>
+									))}
+								</div>
 							)}
 						</li>
 					))}

@@ -11,7 +11,17 @@ const projects = [
 
 export const Route = createFileRoute("/projects/")({
 	head: () => ({
-		meta: [{ title: "Projects — Azamatbek" }, { name: "description", content: "Things I've built." }],
+		meta: [
+			{ title: "Projects — Azamatbek" },
+			{ name: "description", content: "Things I've built." },
+			{ property: "og:title", content: "Projects — Azamatbek" },
+			{ property: "og:description", content: "Things I've built." },
+			{ property: "og:type", content: "website" },
+			{ property: "og:url", content: "https://azamatbek.uz/projects" },
+			{ name: "twitter:card", content: "summary" },
+			{ name: "twitter:title", content: "Projects — Azamatbek" },
+			{ name: "twitter:description", content: "Things I've built." },
+		],
 	}),
 	component: Projects,
 })

@@ -8,7 +8,17 @@ const links = [
 
 export const Route = createFileRoute("/contact/")({
 	head: () => ({
-		meta: [{ title: "Contact — Azamatbek" }, { name: "description", content: "Get in touch." }],
+		meta: [
+			{ title: "Contact — Azamatbek" },
+			{ name: "description", content: "Get in touch." },
+			{ property: "og:title", content: "Contact — Azamatbek" },
+			{ property: "og:description", content: "Get in touch." },
+			{ property: "og:type", content: "website" },
+			{ property: "og:url", content: "https://azamatbek.uz/contact" },
+			{ name: "twitter:card", content: "summary" },
+			{ name: "twitter:title", content: "Contact — Azamatbek" },
+			{ name: "twitter:description", content: "Get in touch." },
+		],
 	}),
 	component: Contact,
 })

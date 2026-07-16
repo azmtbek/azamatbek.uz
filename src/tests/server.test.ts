@@ -75,6 +75,16 @@ describe("server routes", () => {
 			expect(body).toContain("2026-07-16")
 		})
 
+		serverIt("shows reading time on post listing", async () => {
+			const { body } = await html("/blog")
+			expect(body).toContain("min read")
+		})
+
+		serverIt("shows tag badges on post listing", async () => {
+			const { body } = await html("/blog")
+			expect(body).toContain('href="/blog/tags/meta"')
+		})
+
 		serverIt("post titles link to /blog/$slug", async () => {
 			const { body } = await html("/blog")
 			expect(body).toContain('href="/blog/getting-started"')
@@ -106,6 +116,16 @@ describe("server routes", () => {
 		serverIt("includes a back link to /blog", async () => {
 			const { body } = await html("/blog/getting-started")
 			expect(body).toContain('href="/blog"')
+		})
+
+		serverIt("shows reading time on post page", async () => {
+			const { body } = await html("/blog/getting-started")
+			expect(body).toContain("min read")
+		})
+
+		serverIt("shows tag badges on post page", async () => {
+			const { body } = await html("/blog/getting-started")
+			expect(body).toContain('href="/blog/tags/meta"')
 		})
 
 		serverIt("returns 200 with not-found message for missing slug", async () => {
@@ -147,6 +167,57 @@ describe("server routes", () => {
 			const { body } = await html("/contact")
 			expect(body).toContain("github.com/azamatbek-dev")
 			expect(body).toContain("linkedin.com/in/azamatbek")
+		})
+	})
+
+	describe("GET /blog/tags/:tag", () => {
+		serverIt("returns 200 for a valid tag", async () => {
+			const { status } = await html("/blog/tags/meta")
+			expect(status).toBe(200)
+		})
+
+		serverIt("lists posts with the given tag", async () => {
+			const { body } = await html("/blog/tags/meta")
+			expect(body).toContain("Getting Started")
+		})
+
+		serverIt("has correct page title", async () => {
+			const { body } = await html("/blog/tags/meta")
+			expect(body).toContain("<title>#meta — Azamatbek</title>")
+		})
+	})
+
+	describe("GET /rss.xml", () => {
+		serverIt("returns RSS feed with correct content-type", async () => {
+			const res = await get("/rss.xml")
+			expect(res.status).toBe(200)
+			expect(res.headers.get("content-type")).toContain("xml")
+		})
+
+		serverIt("contains blog post entries", async () => {
+			const res = await get("/rss.xml")
+			const body = await res.text()
+			expect(body).toContain('version="2.0"')
+			expect(body).toContain("Getting Started")
+			expect(body).toContain("/blog/getting-started")
+		})
+	})
+
+	describe("GET /sitemap.xml", () => {
+		serverIt("returns sitemap with correct content-type", async () => {
+			const res = await get("/sitemap.xml")
+			expect(res.status).toBe(200)
+			expect(res.headers.get("content-type")).toContain("xml")
+		})
+
+		serverIt("contains all static routes and blog posts", async () => {
+			const res = await get("/sitemap.xml")
+			const body = await res.text()
+			expect(body).toContain("https://azamatbek.uz/")
+			expect(body).toContain("https://azamatbek.uz/blog")
+			expect(body).toContain("https://azamatbek.uz/blog/getting-started")
+			expect(body).toContain("https://azamatbek.uz/projects")
+			expect(body).toContain("https://azamatbek.uz/contact")
 		})
 	})
 
