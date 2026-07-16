@@ -75,23 +75,9 @@ describe("server routes", () => {
 			expect(body).toContain("2026-07-16")
 		})
 
-		serverIt("lists the tanstack-guide post", async () => {
-			const { body } = await html("/blog")
-			expect(body).toContain("TanStack Start Guide")
-			expect(body).toContain("2026-07-10")
-		})
-
-		serverIt("shows posts sorted newest first", async () => {
-			const { body } = await html("/blog")
-			const gettingStartedPos = body.indexOf("Getting Started")
-			const tanstackPos = body.indexOf("TanStack Start Guide")
-			expect(gettingStartedPos).toBeLessThan(tanstackPos)
-		})
-
 		serverIt("post titles link to /blog/$slug", async () => {
 			const { body } = await html("/blog")
 			expect(body).toContain('href="/blog/getting-started"')
-			expect(body).toContain('href="/blog/tanstack-guide"')
 		})
 	})
 

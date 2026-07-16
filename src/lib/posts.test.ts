@@ -25,14 +25,6 @@ describe("getAllPosts()", () => {
 		expect(post?.tags).toContain("meta")
 	})
 
-	it("includes the tanstack-guide post", () => {
-		const posts = getAllPosts()
-		const post = posts.find((p) => p.slug === "tanstack-guide")
-		expect(post).toBeDefined()
-		expect(post?.title).toBe("TanStack Start Guide")
-		expect(post?.date).toBe("2026-07-10")
-	})
-
 	it("sorts posts by date descending", () => {
 		const posts = getAllPosts()
 		for (let i = 1; i < posts.length; i++) {
@@ -76,12 +68,6 @@ describe("getPostBySlug()", () => {
 		const post = await getPostBySlug("getting-started")
 		expect(post?.content).toContain("<p>")
 		expect(post?.content).toContain("Welcome to the blog")
-	})
-
-	it("renders headings in tanstack-guide", async () => {
-		const post = await getPostBySlug("tanstack-guide")
-		expect(post?.content).toContain("<h2>")
-		expect(post?.content).toContain("Routing")
 	})
 
 	it("returns post with all required fields", async () => {

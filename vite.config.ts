@@ -25,6 +25,20 @@ const config = defineConfig({
             .replace(/process\.env\.TSS_SERVER_FN_BASE/g, '"/_serverFn/"')
             .replace(/import\.meta\.env\.TSS_SERVER_FN_BASE/g, '"/_serverFn/"')
         }
+        if (id.includes('serverFnFetcher')) {
+          return code
+            // Default content-type to application/json when the header is stripped
+            .replace(
+              'const contentType = response.headers.get("content-type");',
+              'const contentType = response.headers.get("content-type") || "application/json";',
+            )
+            // Default serializedByStart to true when x-tss-serialized is absent
+            // (/_serverFn/ responses are always seroval-serialized)
+            .replace(
+              'const serializedByStart = !!response.headers.get(X_TSS_SERIALIZED);',
+              'const serializedByStart = response.headers.has(X_TSS_SERIALIZED) ? !!response.headers.get(X_TSS_SERIALIZED) : !response.headers.has("content-type");',
+            )
+        }
       },
     },
   ],
