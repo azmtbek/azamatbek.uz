@@ -33,10 +33,10 @@ const config = defineConfig({
               'const contentType = response.headers.get("content-type") || "application/json";',
             )
             // Default serializedByStart to true when x-tss-serialized is absent
-            // (/_serverFn/ responses are always seroval-serialized)
+            // (/_serverFn/ responses are always seroval-serialized; Vercel strips the header)
             .replace(
               'const serializedByStart = !!response.headers.get(X_TSS_SERIALIZED);',
-              'const serializedByStart = response.headers.has(X_TSS_SERIALIZED) ? !!response.headers.get(X_TSS_SERIALIZED) : !response.headers.has("content-type");',
+              'const serializedByStart = response.headers.has(X_TSS_SERIALIZED) ? !!response.headers.get(X_TSS_SERIALIZED) : true;',
             )
         }
       },
