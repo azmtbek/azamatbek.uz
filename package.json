@@ -2,7 +2,9 @@
   "name": "azamatbek.uz",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@9.15.4",
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "dev": "vite dev --port 3000",
     "build": "vite build",
     "preview": "vite preview",

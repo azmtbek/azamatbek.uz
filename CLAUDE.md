@@ -2,59 +2,72 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Critical: Next.js version
+## Stack
 
-This project uses **Next.js 16.2.9** — a version with breaking changes from what most training data covers. **Before writing any code that touches Next.js APIs, read the relevant guide in `node_modules/next/dist/docs/`.**
-
-Key v16 breaking changes:
-- **Turbopack is the default** for both `next dev` and `next build` (no `--turbopack` flag needed)
-- **Async Request APIs are fully async** — `cookies()`, `headers()`, `draftMode()`, `params`, and `searchParams` cannot be accessed synchronously. Always `await` them.
-- **Middleware is now `proxy`** — the `middleware.ts` convention is deprecated
-- **Linting uses the ESLint CLI directly** (`eslint`), not `next lint`
+- **Framework**: TanStack Start (SSR/SSG via Nitro, file-based routing via TanStack Router)
+- **Runtime**: React 19, Vite 7, TypeScript
+- **Styling**: Tailwind CSS v4 — configured via `@tailwindcss/vite` plugin, no `tailwind.config.*` file
+- **Components**: shadcn/ui (config in `components.json`)
+- **Linting/Formatting**: Biome (config in `biome.json`) — not ESLint, not Prettier
+- **Testing**: Vitest
+- **Package manager**: pnpm only — `npm` and `yarn` are blocked by `preinstall` hook
 
 ## Commands
 
 ```bash
-npm run dev      # Start dev server (Turbopack)
-npm run build    # Production build (Turbopack)
-npm run start    # Start production server
-npm run lint     # Run ESLint
+pnpm dev        # Dev server at http://localhost:3000
+pnpm build      # Production build
+pnpm preview    # Preview production build
+pnpm test       # Run Vitest
+pnpm lint       # Biome lint
+pnpm format     # Biome format
+pnpm check      # Biome lint + format
 ```
-
-No test suite is configured.
 
 ## Architecture
 
-### Route groups
+### Routing
 
-- `src/app/(index)/` — Home page only, with two display modes (adventure/simple)
-- `src/app/(pages)/` — Public pages: `/blog`, `/projects`, `/contact`, `/middle-earth`, `/arcade`
-- `src/app/(admin)/` — Admin routes: `/here` and `/why`, no auth guard (security-by-obscurity)
+Routes live in `src/routes/` and are picked up automatically by the TanStack Router Vite plugin.
 
-### State management (Zustand)
+- `src/routes/__root.tsx` — root layout: HTML shell, `<Header>`, devtools
+- `src/routes/index.tsx` — home page (`/`)
+- `src/routes/hello.tsx` — `/hello`
+- `src/routes/demo/` — scaffold demo routes (can be deleted)
 
-All global state lives in `src/store/`:
+**`src/routeTree.gen.ts` is auto-generated on every save — never edit it manually.**
 
-- `useMode` — toggles between `'adventure'` and `'simple'` home page layouts
-- `useHaveBeen` — gamified progress tracker; records which of 7 named paths the user has visited and computes a `progress` percentage. The path names (e.g. `/middle-earth`, `/thoughts-forest`, `/project-mountains`) are creative aliases for the real routes.
-- `usePrevPath` — tracks previous navigation path for transition effects
+### Adding a route
 
-### Dual-mode home page
+```tsx
+// src/routes/about.tsx
+import { createFileRoute } from '@tanstack/react-router'
 
-`src/app/(index)/Main.tsx` reads `useMode` and conditionally renders `AdventureMode` or `SimpleMode`. AdventureMode is an interactive scroll experience with stars, a contact section, and a link to "Middle Earth" (projects). SimpleMode is a minimal layout.
+export const Route = createFileRoute('/about')({
+  component: () => <div>About</div>,
+})
+```
 
-### UI components
+### Server functions
 
-shadcn/ui components are in `src/components/ui/`. Tailwind CSS v4 is configured via `postcss.config.mjs`.
+TanStack Start exposes server functions via `createServerFn`. See `src/routes/demo/start.server-funcs.tsx` for an example.
 
-### Blog
+### Styles
 
-Markdown posts live in `posts/`. The blog page (`src/app/(pages)/blog/page.tsx`) renders them via `src/components/Grid.tsx` and `src/components/List.tsx` with a toggle between grid and list views.
+Global CSS is at `src/styles.css`. Tailwind v4 uses CSS-based config (`@theme` block inside that file) — there is no JS config file.
 
-### Database
+### shadcn/ui
 
-`src/lib/planetscale.ts` has a PlanetScale connection stub (marked TODO). Requires `DATABASE_HOST`, `DATABASE_USERNAME`, and `DATABASE_PASSWORD` env vars.
+Add components with:
+```bash
+pnpm dlx shadcn@latest add <component>
+```
 
-### Page transition pattern
+Components land in `src/components/ui/`.
 
-Pages use `useTimerCount` hook + Tailwind `opacity-0 / opacity-100` with `transition duration-1000` to fade in on mount.
+## Key gotchas
+
+- `src/routeTree.gen.ts` — auto-generated, do not touch
+- `app/` directory — leftover Next.js scaffold files, not active
+- Biome uses tabs for indentation and double quotes for JS strings (see `biome.json`)
+- Tailwind v4: no `tailwind.config.ts`, utilities defined in CSS via `@theme`
