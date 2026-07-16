@@ -17,6 +17,16 @@ const config = defineConfig({
     tailwindcss(),
     tanstackStart(),
     viteReact(),
+    {
+      name: 'inject-tss-server-fn-base',
+      transform(code, id) {
+        if (id.includes('createClientRpc')) {
+          return code
+            .replace(/process\.env\.TSS_SERVER_FN_BASE/g, '"/_serverFn/"')
+            .replace(/import\.meta\.env\.TSS_SERVER_FN_BASE/g, '"/_serverFn/"')
+        }
+      },
+    },
   ],
 })
 

@@ -8,10 +8,10 @@ Status: `todo` · `in-progress` · `done`
 
 | ID | Status | Title |
 |----|--------|-------|
-| T-01 | todo | Delete demo routes and data |
-| T-02 | todo | Delete `hello.tsx` route |
-| T-03 | todo | Delete dead `app/` directory |
-| T-04 | todo | Replace Header with real site nav |
+| T-01 | done | Delete demo routes and data |
+| T-02 | done | Delete `hello.tsx` route |
+| T-03 | done | Delete dead `app/` directory |
+| T-04 | done | Replace Header with real site nav |
 
 ### T-01 — Delete demo routes and data
 Delete `src/routes/demo/` (entire directory) and `src/data/demo.punk-songs.ts`.
@@ -35,11 +35,11 @@ Rewrite `src/components/Header.tsx`. Requirements:
 
 | ID | Status | Title |
 |----|--------|-------|
-| T-05 | todo | Home page |
-| T-06 | todo | Blog listing page (static shell) |
-| T-07 | todo | Blog post page (static shell) |
-| T-08 | todo | Projects page |
-| T-09 | todo | Contact page |
+| T-05 | done | Home page |
+| T-06 | done | Blog listing page (static shell) |
+| T-07 | done | Blog post page (static shell) |
+| T-08 | done | Projects page |
+| T-09 | done | Contact page |
 
 ### T-05 — Home page
 Rewrite `src/routes/index.tsx`. Content: name, one-line bio, links to Blog and Projects. Clean layout, no placeholder feature cards.
@@ -62,10 +62,10 @@ Create `src/routes/contact/index.tsx`. Email link + social links (GitHub, Linked
 
 | ID | Status | Title |
 |----|--------|-------|
-| T-10 | todo | Add markdown packages |
-| T-11 | todo | Create `src/lib/posts.ts` |
-| T-12 | todo | Wire blog listing to `getAllPosts()` |
-| T-13 | todo | Wire blog post page to `getPostBySlug()` |
+| T-10 | done | Add markdown packages |
+| T-11 | done | Create `src/lib/posts.ts` |
+| T-12 | done | Wire blog listing to `getAllPosts()` |
+| T-13 | done | Wire blog post page to `getPostBySlug()` |
 
 ### T-10 — Add markdown packages
 ```bash
@@ -100,10 +100,10 @@ Update `src/routes/blog/$slug.tsx` to call `getPostBySlug(slug)` via a route loa
 
 | ID | Status | Title |
 |----|--------|-------|
-| T-14 | todo | Per-page `<meta>` titles and descriptions |
-| T-15 | todo | 404 catch-all route |
-| T-16 | todo | Dark mode |
-| T-17 | todo | Mobile-responsive nav |
+| T-14 | done | Per-page `<meta>` titles and descriptions |
+| T-15 | done | 404 catch-all route |
+| T-16 | done | Dark mode |
+| T-17 | done | Mobile-responsive nav |
 
 ### T-14 — Per-page `<meta>` titles and descriptions
 Use `Route.head()` in each route file to set `<title>` and `<meta name="description">`.
