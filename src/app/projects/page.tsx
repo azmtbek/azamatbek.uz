@@ -1,32 +1,31 @@
-import { createFileRoute } from "@tanstack/react-router"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+	title: "Projects — Azamatbek",
+	description: "Things I've built.",
+	openGraph: {
+		title: "Projects — Azamatbek",
+		description: "Things I've built.",
+		type: "website",
+		url: "https://azamatbek.uz/projects",
+	},
+	twitter: {
+		card: "summary",
+		title: "Projects — Azamatbek",
+		description: "Things I've built.",
+	},
+}
 
 const projects = [
 	{
 		name: "azamatbek.uz",
-		description: "Personal site and blog built with TanStack Start.",
+		description: "Personal site and blog built with Next.js.",
 		github: "https://github.com/azamatbek-dev/azamatbek.uz",
 		url: "https://azamatbek.uz",
 	},
 ]
 
-export const Route = createFileRoute("/projects/")({
-	head: () => ({
-		meta: [
-			{ title: "Projects — Azamatbek" },
-			{ name: "description", content: "Things I've built." },
-			{ property: "og:title", content: "Projects — Azamatbek" },
-			{ property: "og:description", content: "Things I've built." },
-			{ property: "og:type", content: "website" },
-			{ property: "og:url", content: "https://azamatbek.uz/projects" },
-			{ name: "twitter:card", content: "summary" },
-			{ name: "twitter:title", content: "Projects — Azamatbek" },
-			{ name: "twitter:description", content: "Things I've built." },
-		],
-	}),
-	component: Projects,
-})
-
-function Projects() {
+export default function ProjectsPage() {
 	return (
 		<main className="max-w-3xl mx-auto px-6 py-12">
 			<h1 className="text-2xl font-bold tracking-tight mb-8">Projects</h1>

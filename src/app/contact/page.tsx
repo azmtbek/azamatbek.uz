@@ -1,4 +1,20 @@
-import { createFileRoute } from "@tanstack/react-router"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+	title: "Contact — Azamatbek",
+	description: "Get in touch.",
+	openGraph: {
+		title: "Contact — Azamatbek",
+		description: "Get in touch.",
+		type: "website",
+		url: "https://azamatbek.uz/contact",
+	},
+	twitter: {
+		card: "summary",
+		title: "Contact — Azamatbek",
+		description: "Get in touch.",
+	},
+}
 
 const links = [
 	{ label: "Email", href: "mailto:azamatbek.dev@gmail.com" },
@@ -6,24 +22,7 @@ const links = [
 	{ label: "LinkedIn", href: "https://linkedin.com/in/azamatbek" },
 ]
 
-export const Route = createFileRoute("/contact/")({
-	head: () => ({
-		meta: [
-			{ title: "Contact — Azamatbek" },
-			{ name: "description", content: "Get in touch." },
-			{ property: "og:title", content: "Contact — Azamatbek" },
-			{ property: "og:description", content: "Get in touch." },
-			{ property: "og:type", content: "website" },
-			{ property: "og:url", content: "https://azamatbek.uz/contact" },
-			{ name: "twitter:card", content: "summary" },
-			{ name: "twitter:title", content: "Contact — Azamatbek" },
-			{ name: "twitter:description", content: "Get in touch." },
-		],
-	}),
-	component: Contact,
-})
-
-function Contact() {
+export default function ContactPage() {
 	return (
 		<main className="max-w-3xl mx-auto px-6 py-12">
 			<h1 className="text-2xl font-bold tracking-tight mb-4">Contact</h1>

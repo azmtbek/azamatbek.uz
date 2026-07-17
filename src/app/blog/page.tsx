@@ -1,29 +1,25 @@
-import { Link, createFileRoute } from "@tanstack/react-router"
-import { createServerFn } from "@tanstack/react-start"
-import { getAllPosts } from "../../lib/posts"
+import type { Metadata } from "next"
+import Link from "next/link"
+import { getAllPosts } from "@/lib/posts"
 
-const fetchPosts = createServerFn({ method: "GET" }).handler(() => getAllPosts())
+export const metadata: Metadata = {
+	title: "Blog — Azamatbek",
+	description: "Writing on web development, systems, and things I find interesting.",
+	openGraph: {
+		title: "Blog — Azamatbek",
+		description: "Writing on web development, systems, and things I find interesting.",
+		type: "website",
+		url: "https://azamatbek.uz/blog",
+	},
+	twitter: {
+		card: "summary",
+		title: "Blog — Azamatbek",
+		description: "Writing on web development, systems, and things I find interesting.",
+	},
+}
 
-export const Route = createFileRoute("/blog/")({
-	head: () => ({
-		meta: [
-			{ title: "Blog — Azamatbek" },
-			{ name: "description", content: "Writing on web development, systems, and things I find interesting." },
-			{ property: "og:title", content: "Blog — Azamatbek" },
-			{ property: "og:description", content: "Writing on web development, systems, and things I find interesting." },
-			{ property: "og:type", content: "website" },
-			{ property: "og:url", content: "https://azamatbek.uz/blog" },
-			{ name: "twitter:card", content: "summary" },
-			{ name: "twitter:title", content: "Blog — Azamatbek" },
-			{ name: "twitter:description", content: "Writing on web development, systems, and things I find interesting." },
-		],
-	}),
-	loader: () => fetchPosts(),
-	component: BlogListing,
-})
-
-function BlogListing() {
-	const posts = Route.useLoaderData()
+export default function BlogPage() {
+	const posts = getAllPosts()
 
 	return (
 		<main className="max-w-3xl mx-auto px-6 py-12">
@@ -34,7 +30,7 @@ function BlogListing() {
 				<ul className="space-y-8">
 					{posts.map((post) => (
 						<li key={post.slug} className="border-b pb-8 last:border-0">
-							<Link to="/blog/$slug" params={{ slug: post.slug }} className="group">
+							<Link href={`/blog/${post.slug}`} className="group">
 								<h2 className="font-semibold text-lg group-hover:underline underline-offset-4 mb-1">
 									{post.title}
 								</h2>
@@ -52,8 +48,7 @@ function BlogListing() {
 									{post.tags.map((tag) => (
 										<Link
 											key={tag}
-											to="/blog/tags/$tag"
-											params={{ tag }}
+											href={`/blog/tags/${tag}`}
 											className="text-xs px-2 py-0.5 rounded-full border border-border text-muted-foreground hover:text-foreground hover:border-foreground transition-colors"
 										>
 											{tag}

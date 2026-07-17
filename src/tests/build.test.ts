@@ -4,8 +4,8 @@ import path from "node:path"
 import { afterAll, beforeAll, describe, expect, it } from "vitest"
 
 const BUILD_PORT = 3001
-const serverEntry = path.join(process.cwd(), ".output/server/index.mjs")
-const buildExists = fs.existsSync(serverEntry)
+const nextBuildDir = path.join(process.cwd(), ".next")
+const buildExists = fs.existsSync(nextBuildDir)
 
 let serverProcess: ReturnType<typeof spawn> | null = null
 
@@ -18,14 +18,14 @@ async function get(route: string) {
 
 describe.skipIf(!buildExists)("production build", () => {
 	beforeAll(async () => {
-		serverProcess = spawn("node", [serverEntry], {
-			env: { ...process.env, NITRO_PORT: String(BUILD_PORT) },
-			stdio: "pipe",
-		})
+		serverProcess = spawn(
+			"node_modules/.bin/next",
+			["start", "--port", String(BUILD_PORT)],
+			{ stdio: "pipe" },
+		)
 
-		// Wait until the server responds
 		await new Promise<void>((resolve, reject) => {
-			const timeout = setTimeout(() => reject(new Error("Server did not start within 15s")), 15_000)
+			const timeout = setTimeout(() => reject(new Error("Server did not start within 30s")), 30_000)
 			const poll = () =>
 				fetch(`http://localhost:${BUILD_PORT}`, { signal: AbortSignal.timeout(1000) })
 					.then(() => { clearTimeout(timeout); resolve() })
@@ -33,7 +33,7 @@ describe.skipIf(!buildExists)("production build", () => {
 			serverProcess!.on("error", (err) => { clearTimeout(timeout); reject(err) })
 			setTimeout(poll, 1000)
 		})
-	}, 20_000)
+	}, 35_000)
 
 	afterAll(() => {
 		serverProcess?.kill()
@@ -61,10 +61,10 @@ describe.skipIf(!buildExists)("production build", () => {
 		expect(body).toContain("Welcome to the blog")
 	})
 
-	it("/blog/getting-started HTML does not reference Vite dev assets", async () => {
+	it("/blog/getting-started HTML does not reference Next.js dev overlay", async () => {
 		const body = await (await get("/blog/getting-started")).text()
-		expect(body).not.toContain("/@react-refresh")
-		expect(body).not.toContain("/@vite/")
+		expect(body).not.toContain("__next_hmr")
+		expect(body).not.toContain("_next/webpack-hmr")
 	})
 
 	it("/blog/tags/meta returns 200 with filtered posts", async () => {

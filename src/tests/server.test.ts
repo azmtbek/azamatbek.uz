@@ -222,9 +222,9 @@ describe("server routes", () => {
 	})
 
 	describe("GET /[unknown]", () => {
-		serverIt("returns 200 with 404 page content", async () => {
+		serverIt("returns 404 with not-found page content", async () => {
 			const { status, body } = await html("/this-page-does-not-exist")
-			expect(status).toBe(200)
+			expect(status).toBe(404)
 			expect(body).toContain("Page not found")
 		})
 
