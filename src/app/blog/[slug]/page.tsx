@@ -65,8 +65,8 @@ export default async function BlogPostPage({ params }: Props) {
 				</div>
 			)}
 			<div
-				className="prose prose-neutral max-w-none"
-				// biome-ignore lint/security/noDangerouslySetInnerHtml: remark-html sanitizes raw HTML by default
+				className="prose prose-neutral dark:prose-invert max-w-none"
+				// biome-ignore lint/security/noDangerouslySetInnerHtml: rehype-sanitize strips unsafe HTML
 				dangerouslySetInnerHTML={{ __html: post.content }}
 			/>
 		</main>

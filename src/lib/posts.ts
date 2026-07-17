@@ -1,8 +1,11 @@
 import fs from "node:fs"
 import path from "node:path"
 import matter from "gray-matter"
+import rehypeHighlight from "rehype-highlight"
+import rehypeSanitize from "rehype-sanitize"
+import rehypeStringify from "rehype-stringify"
 import { remark } from "remark"
-import html from "remark-html"
+import remarkRehype from "remark-rehype"
 
 const postsDir = path.join(process.cwd(), "public/posts")
 
@@ -53,7 +56,12 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
 	try {
 		const raw = fs.readFileSync(filepath, "utf-8")
 		const { data, content: body } = matter(raw)
-		const processed = await remark().use(html).process(body)
+		const processed = await remark()
+			.use(remarkRehype, { allowDangerousHtml: true })
+			.use(rehypeSanitize)
+			.use(rehypeHighlight)
+			.use(rehypeStringify)
+			.process(body)
 		const wordCount = body.split(/\s+/).filter(Boolean).length
 
 		return {

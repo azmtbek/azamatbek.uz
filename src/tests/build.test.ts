@@ -61,6 +61,19 @@ describe.skipIf(!buildExists)("production build", () => {
 		expect(body).toContain("Welcome to the blog")
 	})
 
+	it("/blog/getting-started content div has prose and dark:prose-invert classes", async () => {
+		const body = await (await get("/blog/getting-started")).text()
+		expect(body).toContain("prose")
+		expect(body).toContain("dark:prose-invert")
+	})
+
+	it("/blog/getting-started renders rich markdown: headings, code, blockquote", async () => {
+		const body = await (await get("/blog/getting-started")).text()
+		expect(body).toContain("<h2")
+		expect(body).toContain("<pre>")
+		expect(body).toContain("<blockquote>")
+	})
+
 	it("/blog/getting-started HTML does not reference Next.js dev overlay", async () => {
 		const body = await (await get("/blog/getting-started")).text()
 		expect(body).not.toContain("__next_hmr")

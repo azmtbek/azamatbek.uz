@@ -12,6 +12,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 		<html lang="en" suppressHydrationWarning>
 			<head>
 				<link rel="alternate" type="application/rss+xml" title="Azamatbek's Blog" href="/rss.xml" />
+				{/* Runs before first paint to avoid flash of wrong theme */}
+				<script dangerouslySetInnerHTML={{ __html: `(function(){var s=localStorage.getItem('theme'),d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.classList.add('dark');})();` }} />
 			</head>
 			<body>
 				<a
