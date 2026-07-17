@@ -8,7 +8,7 @@
     "predev": "npx tsx scripts/generate-feeds.ts",
     "dev": "vite dev --port 3000",
     "prebuild": "npx tsx scripts/generate-feeds.ts",
-    "build": "vite build",
+    "build": "vite build && cp -r posts .output/posts",
     "preview": "vite preview",
     "test": "vitest run",
     "test:build": "pnpm build && vitest run src/tests/build.test.ts",
