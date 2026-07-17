@@ -1,25 +1,29 @@
-import type { Metadata } from "next"
-import Link from "next/link"
-import { getAllPosts } from "@/lib/posts"
+import type { Metadata } from "next";
+import Link from "next/link";
+import { getAllPosts } from "@/lib/posts";
 
 export const metadata: Metadata = {
 	title: "Blog — Azamatbek",
-	description: "Writing on web development, systems, and things I find interesting.",
+	description:
+		"Writing on web development, systems, and things I find interesting.",
 	openGraph: {
 		title: "Blog — Azamatbek",
-		description: "Writing on web development, systems, and things I find interesting.",
+		description:
+			"Writing on web development, systems, and things I find interesting.",
 		type: "website",
 		url: "https://azamatbek.uz/blog",
+		siteName: "azamatbek.uz",
 	},
 	twitter: {
-		card: "summary",
+		card: "summary_large_image",
 		title: "Blog — Azamatbek",
-		description: "Writing on web development, systems, and things I find interesting.",
+		description:
+			"Writing on web development, systems, and things I find interesting.",
 	},
-}
+};
 
 export default function BlogPage() {
-	const posts = getAllPosts()
+	const posts = getAllPosts();
 
 	return (
 		<main className="max-w-3xl mx-auto px-6 py-12">
@@ -38,10 +42,14 @@ export default function BlogPage() {
 							<div className="flex items-center gap-3 mb-2">
 								<p className="text-xs text-muted-foreground">{post.date}</p>
 								<span className="text-xs text-muted-foreground">·</span>
-								<p className="text-xs text-muted-foreground">{post.readingTime} min read</p>
+								<p className="text-xs text-muted-foreground">
+									{post.readingTime} min read
+								</p>
 							</div>
 							{post.description && (
-								<p className="text-sm text-muted-foreground mb-3">{post.description}</p>
+								<p className="text-sm text-muted-foreground mb-3">
+									{post.description}
+								</p>
 							)}
 							{post.tags.length > 0 && (
 								<div className="flex flex-wrap gap-2">
@@ -61,5 +69,5 @@ export default function BlogPage() {
 				</ul>
 			)}
 		</main>
-	)
+	);
 }

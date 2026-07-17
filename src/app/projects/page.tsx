@@ -1,4 +1,4 @@
-import type { Metadata } from "next"
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
 	title: "Projects — Azamatbek",
@@ -8,22 +8,23 @@ export const metadata: Metadata = {
 		description: "Things I've built.",
 		type: "website",
 		url: "https://azamatbek.uz/projects",
+		siteName: "azamatbek.uz",
 	},
 	twitter: {
-		card: "summary",
+		card: "summary_large_image",
 		title: "Projects — Azamatbek",
 		description: "Things I've built.",
 	},
-}
+};
 
 const projects = [
 	{
 		name: "azamatbek.uz",
 		description: "Personal site and blog built with Next.js.",
-		github: "https://github.com/azamatbek-dev/azamatbek.uz",
+		github: "https://github.com/azmtbek/azamatbek.uz",
 		url: "https://azamatbek.uz",
 	},
-]
+];
 
 export default function ProjectsPage() {
 	return (
@@ -62,5 +63,5 @@ export default function ProjectsPage() {
 				))}
 			</ul>
 		</main>
-	)
+	);
 }

@@ -1,19 +1,34 @@
-import type { Metadata } from "next"
-import Header from "@/components/Header"
-import "./globals.css"
+import { Analytics } from "@vercel/analytics/next";
+import type { Metadata } from "next";
+import Header from "@/components/Header";
+import "./globals.css";
 
 export const metadata: Metadata = {
+	metadataBase: new URL("https://azamatbek.uz"),
 	title: "Azamatbek Mamarajabov",
 	description: "Software engineer.",
-}
+};
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+	children,
+}: {
+	children: React.ReactNode;
+}) {
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<head>
-				<link rel="alternate" type="application/rss+xml" title="Azamatbek's Blog" href="/rss.xml" />
+				<link
+					rel="alternate"
+					type="application/rss+xml"
+					title="Azamatbek's Blog"
+					href="/rss.xml"
+				/>
 				{/* Runs before first paint to avoid flash of wrong theme */}
-				<script dangerouslySetInnerHTML={{ __html: `(function(){var s=localStorage.getItem('theme'),d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.classList.add('dark');})();` }} />
+				<script
+					dangerouslySetInnerHTML={{
+						__html: `(function(){var s=localStorage.getItem('theme'),d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(s==='dark'||(s===null&&d))document.documentElement.classList.add('dark');})();`,
+					}}
+				/>
 			</head>
 			<body>
 				<a
@@ -24,7 +39,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				</a>
 				<Header />
 				<div id="main-content">{children}</div>
+				<Analytics />
 			</body>
 		</html>
-	)
+	);
 }

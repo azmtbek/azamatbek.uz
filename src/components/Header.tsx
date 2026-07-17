@@ -1,26 +1,35 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import ThemeToggle from "./ThemeToggle"
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import Logo from "./Logo";
+import ThemeToggle from "./ThemeToggle";
 
 const links = [
 	{ href: "/", label: "Home" },
 	{ href: "/blog", label: "Blog" },
 	{ href: "/projects", label: "Projects" },
 	{ href: "/contact", label: "Contact" },
-] as const
+] as const;
 
 export default function Header() {
-	const pathname = usePathname()
+	const pathname = usePathname();
 
 	const isActive = (href: string) =>
-		href === "/" ? pathname === "/" : pathname.startsWith(href)
+		href === "/" ? pathname === "/" : pathname.startsWith(href);
 
 	return (
 		<header className="border-b px-6 py-4">
-			<nav aria-label="Main navigation" className="max-w-3xl mx-auto flex flex-wrap items-center gap-x-8 gap-y-3">
-				<Link href="/" aria-label="Home" className="font-semibold text-sm mr-auto">
+			<nav
+				aria-label="Main navigation"
+				className="max-w-3xl mx-auto flex flex-wrap items-center gap-x-8 gap-y-3"
+			>
+				<Link
+					href="/"
+					aria-label="Home"
+					className="flex items-center gap-2 font-semibold text-sm mr-auto"
+				>
+					<Logo className="size-5" />
 					azamatbek.uz
 				</Link>
 				<ul className="flex items-center gap-5 flex-wrap">
@@ -43,5 +52,5 @@ export default function Header() {
 				<ThemeToggle />
 			</nav>
 		</header>
-	)
+	);
 }

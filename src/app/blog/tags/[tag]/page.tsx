@@ -1,13 +1,13 @@
-import type { Metadata } from "next"
-import Link from "next/link"
-import { getAllPosts } from "@/lib/posts"
+import type { Metadata } from "next";
+import Link from "next/link";
+import { getAllPosts } from "@/lib/posts";
 
 interface Props {
-	params: Promise<{ tag: string }>
+	params: Promise<{ tag: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-	const { tag } = await params
+	const { tag } = await params;
 	return {
 		title: `#${tag} — Azamatbek`,
 		description: `Posts tagged "${tag}".`,
@@ -16,13 +16,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 			description: `Posts tagged "${tag}".`,
 			type: "website",
 			url: `https://azamatbek.uz/blog/tags/${tag}`,
+			siteName: "azamatbek.uz",
 		},
-	}
+		twitter: {
+			card: "summary_large_image",
+			title: `#${tag} — Azamatbek`,
+			description: `Posts tagged "${tag}".`,
+		},
+	};
 }
 
 export default async function TagPage({ params }: Props) {
-	const { tag } = await params
-	const posts = getAllPosts().filter((p) => p.tags.includes(tag))
+	const { tag } = await params;
+	const posts = getAllPosts().filter((p) => p.tags.includes(tag));
 
 	return (
 		<main className="max-w-3xl mx-auto px-6 py-12">
@@ -50,15 +56,19 @@ export default async function TagPage({ params }: Props) {
 							<div className="flex items-center gap-3 mb-2">
 								<p className="text-xs text-muted-foreground">{post.date}</p>
 								<span className="text-xs text-muted-foreground">·</span>
-								<p className="text-xs text-muted-foreground">{post.readingTime} min read</p>
+								<p className="text-xs text-muted-foreground">
+									{post.readingTime} min read
+								</p>
 							</div>
 							{post.description && (
-								<p className="text-sm text-muted-foreground mb-3">{post.description}</p>
+								<p className="text-sm text-muted-foreground mb-3">
+									{post.description}
+								</p>
 							)}
 						</li>
 					))}
 				</ul>
 			)}
 		</main>
-	)
+	);
 }
